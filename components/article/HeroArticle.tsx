@@ -1,7 +1,7 @@
 import { formatDate } from '@/lib/common';
 import { Article } from '@/types/article';
-import Image from 'next/image';
 import Link from 'next/link';
+import ImageWithSkeleton from '../common/ImageWithSkeleton';
 
 interface HeroArticleProps {
 	article: Article;
@@ -16,12 +16,10 @@ const HeroArticle = ({ article }: HeroArticleProps) => {
 					className='flex flex-col tracking-wide'
 				>
 					{article.banner_image && (
-						<Image
+						<ImageWithSkeleton
 							src={article.banner_image}
 							alt={article.title}
-							width={100}
-							height={320}
-							className='w-full h-[320px] object-cover rounded'
+							parentClassName='w-full max-w-[450px] lg:max-w-[650px] h-[320px]'
 						/>
 					)}
 					<div className='mt-2'>

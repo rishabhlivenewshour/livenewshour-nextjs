@@ -44,3 +44,9 @@ export interface ArticleByCategoryResponse {
 		totalItems: number;
 	};
 }
+
+interface ArticlesBySearchProps {
+	searchQuery: string;
+	page: number;
+	pageSize: number;
+}

@@ -3,6 +3,7 @@ import {
 	ArticleByCategoryResponse,
 	ArticleResponse,
 	ArticlesByCategoryProps,
+	ArticlesBySearchProps,
 	ArticlesProps,
 } from '@/types/article';
 
@@ -104,8 +105,8 @@ export const getArticlesByCategoryClient = async ({
 	if (categoryId === null) return null;
 	const res = await fetch(
 		`${API_URL}/news/categories/${categoryId}/articles/?is_published=true&page=${page}&page_size=${pageSize}`,
-		{ cache:'no-store' },
-	); 
+		{ cache: 'no-store' },
+	);
 
 	if (res.status === 404) {
 		return {
@@ -180,4 +181,79 @@ export const getRelatedArticles = async ({
 	const data: ArticleResponse = await res.json();
 
 	return data.results.filter((a) => a.id !== articleId).slice(0, 3);
+};
+
+export const getArticlesBySearch = async ({
+	searchQuery = '',
+	page = 1,
+	pageSize = 15,
+}: ArticlesBySearchProps): Promise<ArticleByCategoryResponse> => {
+	const res = await fetch(
+		`${API_URL}/news/articles/?is_published=true&search=${searchQuery}&page=${page}&page_size=${pageSize}`,
+		{ next: { revalidate: 60 * 60 } },
+	); // 1 hour
+
+	if (!res.ok) {
+		throw new Error('failed to fetch articles by search');
+	}
+
+	const data: ArticleResponse = await res.json();
+
+	const filteredData = data?.results.map((article) => ({
+		id: article.id,
+		title: article.title,
+		slug: article.slug,
+		summary: article.summary,
+		banner_image: article.banner_image,
+		category: article.category,
+		author: article.author,
+	}));
+
+	return {
+		articles: filteredData,
+		pagination: {
+			page: data.page || page,
+			pageSize: data.page_size || pageSize,
+			totalPages: data.total_pages || 1,
+			totalItems: data.total_items || data.results.length,
+		},
+	};
+};
+
+export const getArticlesBySearchClient = async ({
+	searchQuery = '',
+	page = 1,
+	pageSize = 15,
+}: ArticlesBySearchProps): Promise<ArticleByCategoryResponse | null> => {
+	if (searchQuery === null) return null;
+	const res = await fetch(
+		`${API_URL}/news/articles/?is_published=true&search=${searchQuery}&page=${page}&page_size=${pageSize}`,
+		{ cache: 'no-store' },
+	);
+
+	if (!res.ok) {
+		throw new Error('failed to fetch articles by search');
+	}
+
+	const data: ArticleResponse = await res.json();
+
+	const filteredData = data?.results.map((article) => ({
+		id: article.id,
+		title: article.title,
+		slug: article.slug,
+		summary: article.summary,
+		banner_image: article.banner_image,
+		category: article.category,
+		author: article.author,
+	}));
+
+	return {
+		articles: filteredData,
+		pagination: {
+			page: data.page || page,
+			pageSize: data.page_size || pageSize,
+			totalPages: data.total_pages || 1,
+			totalItems: data.total_items || data.results.length,
+		},
+	};
 };

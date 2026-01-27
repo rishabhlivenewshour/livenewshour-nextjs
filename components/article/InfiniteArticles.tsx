@@ -27,7 +27,6 @@ const InfiniteArticles = ({
 	const [articles, setArticles] = useState<Article[]>([]);
 
 	const loadNextPage = async () => {
-		console.log(hasMore, loadingRef);
 		if (!hasMoreRef.current || loadingRef.current) return;
 
 		loadingRef.current = true;
@@ -53,8 +52,6 @@ const InfiniteArticles = ({
 				return [...prev, ...uniqueNew];
 			});
 
-			console.log(data?.pagination);
-			console.log(pageRef.current);
 			if (data?.pagination && pageRef.current >= data?.pagination?.totalPages) {
 				hasMoreRef.current = false;
 				setHasMore(false);

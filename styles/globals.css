@@ -74,3 +74,9 @@ button {
 .editor-content a:hover {
 	color: #1d4ed8 !important;
 }
+
+@keyframes shimmer {
+	100% {
+		transform: translateX(200%);
+	}
+}

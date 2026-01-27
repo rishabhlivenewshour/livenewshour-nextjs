@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Category } from '@/types/category';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
+import ImageWithSkeleton from '../common/ImageWithSkeleton';
 
 interface ArticleFeedByCategoryClientProps {
 	category: Category;
@@ -44,7 +44,7 @@ const ArticleFeedByCategoryClient = ({
 
 	return (
 		<div ref={elementRef} className='w-full'>
-			<div className='flex justify-between items-start'>
+			<div className='flex justify-between items-start mb-4'>
 				<Heading title={category.name} size='sm' />
 				{categoryArticles.length >= 4 && (
 					<button
@@ -58,27 +58,24 @@ const ArticleFeedByCategoryClient = ({
 				)}
 			</div>
 
-			{!isVisible && (
+			{/* {!isVisible && (
 				<div className='flex flex-col gap-3 animate-pulse'>
 					<div className='h-40 bg-gray-300 rounded'></div>
 					<div className='h-4 bg-gray-300 rounded w-3/4'></div>
-					<div className='h-4 bg-gray-300 rounded w-1/2'></div>
 				</div>
-			)}
+			)} */}
 
-			<div className='flex flex-col gap-3 mt-2'>
+			<div className='flex flex-col gap-3 '>
 				<Link
 					href={`/news/articles/${categoryArticles[0].slug}`}
 					key={categoryArticles[0].id}
 					className='flex flex-col gap-2 rounded transition-all duration-150 ease-in-out group'
 				>
 					{categoryArticles[0].banner_image && (
-						<Image
+						<ImageWithSkeleton
 							src={categoryArticles[0].banner_image}
 							alt={categoryArticles[0].title}
-							height={200}
-							width={100}
-							className='w-full h-[200px] sm:max-w-[250px] lg:max-w-[300px] object-cover rounded'
+							parentClassName='w-full h-[200px] sm:max-w-[250px] lg:max-w-[300px]'
 						/>
 					)}
 					<h2 className='text-[13px] font-medium w-full sm:max-w-[300px] mt-3 group-hover:text-primary transition'>
