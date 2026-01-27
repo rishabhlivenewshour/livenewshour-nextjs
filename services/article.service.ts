@@ -72,11 +72,52 @@ export const getArticlesByCategory = async ({
 	categoryId,
 	page = 1,
 	pageSize = 4,
-}: ArticlesByCategoryProps): Promise<ArticleByCategoryResponse> => {
+}: ArticlesByCategoryProps): Promise<ArticleByCategoryResponse | null> => {
+	if (categoryId === null) return null;
 	const res = await fetch(
 		`${API_URL}/news/categories/${categoryId}/articles/?is_published=true&page=${page}&page_size=${pageSize}`,
 		{ next: { revalidate: 60 * 60 } },
 	); // 1 hour
+
+	if (!res.ok) {
+		throw new Error('failed to fetch articles by category');
+	}
+
+	const data: ArticleResponse = await res.json();
+
+	return {
+		articles: data.results,
+		pagination: {
+			page: data.page || page,
+			pageSize: data.page_size || pageSize,
+			totalPages: data.total_pages || 1,
+			totalItems: data.total_items || data.results.length,
+		},
+	};
+};
+
+export const getArticlesByCategoryClient = async ({
+	categoryId,
+	page = 1,
+	pageSize = 4,
+}: ArticlesByCategoryProps): Promise<ArticleByCategoryResponse | null> => {
+	if (categoryId === null) return null;
+	const res = await fetch(
+		`${API_URL}/news/categories/${categoryId}/articles/?is_published=true&page=${page}&page_size=${pageSize}`,
+		{ cache:'no-store' },
+	); 
+
+	if (res.status === 404) {
+		return {
+			articles: [],
+			pagination: {
+				page,
+				pageSize,
+				totalPages: page - 1,
+				totalItems: 0,
+			},
+		};
+	}
 
 	if (!res.ok) {
 		throw new Error('failed to fetch articles by category');
@@ -114,4 +155,29 @@ export const getArticleBySlug = async ({
 	const data: ArticleResponse = await res.json();
 
 	return data?.results[0];
+};
+
+interface RelatedArticleProps {
+	categoryId: number | null;
+	articleId: number | null;
+}
+
+export const getRelatedArticles = async ({
+	categoryId,
+	articleId,
+}: RelatedArticleProps): Promise<Article[] | null> => {
+	if (categoryId === null) return null;
+
+	const res = await fetch(
+		`${API_URL}/news/categories/${categoryId}/articles/?is_published=true&page=${1}&page_size=${4}`,
+		{ next: { revalidate: 60 * 60 } },
+	); // 1 hour
+
+	if (!res.ok) {
+		throw new Error('failed to fetch hero article');
+	}
+
+	const data: ArticleResponse = await res.json();
+
+	return data.results.filter((a) => a.id !== articleId).slice(0, 3);
 };

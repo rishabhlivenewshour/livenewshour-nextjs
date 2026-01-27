@@ -10,7 +10,7 @@ interface ArticleFeedProps {
 
 const ArticleFeed = ({ heading, articles }: ArticleFeedProps) => {
 	return (
-		<div className=''>
+		<div className='mt-10'>
             <Heading title={heading} size='md'/>
 			<div className='mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-10 text-sm tracking-wide'>
 				{articles.map((article) => (

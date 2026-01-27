@@ -81,7 +81,7 @@ const ArticleFeedByCategoryClient = ({
 							className='w-full h-[200px] sm:max-w-[250px] lg:max-w-[300px] object-cover rounded'
 						/>
 					)}
-					<h2 className='text-[13px] font-[500] w-full sm:max-w-[300px] mt-3 group-hover:text-primary transition'>
+					<h2 className='text-[13px] font-medium w-full sm:max-w-[300px] mt-3 group-hover:text-primary transition'>
 						{categoryArticles[0].title}
 					</h2>
 				</Link>
@@ -92,7 +92,7 @@ const ArticleFeedByCategoryClient = ({
 						key={article.id}
 						className='flex flex-col gap-1 rounded hover:text-primary border-t border-gray-300 transition-all duration-150 ease-in-out'
 					>
-						<h2 className='text-[13px] font-[500] w-full sm:max-w-[300px] mt-2'>
+						<h2 className='text-[13px] font-medium w-full sm:max-w-[300px] mt-2'>
 							{article.title}
 						</h2>
 					</Link>

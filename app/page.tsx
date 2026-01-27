@@ -20,12 +20,12 @@ const Home = async () => {
 
 	return (
 		<div className=''>
-			<Heading title='Headlines' size='lg' />
+			<Heading title='Headlines' size='xl' />
 			<HeroSection
 				heroArticle={heroArticles[0]}
 				articles={heroArticles.slice(1)}
 			/>
-			<div className='flex flex-col lg:flex-row gap-5 pt-5 pb-16'>
+			<div className='flex flex-col lg:flex-row gap-5 pt-5 pb-16 mt-5'>
 				<div className='w-full lg:w-[60%]'>
 					{articles.length === 0 ? (
 						<>
