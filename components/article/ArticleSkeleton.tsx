@@ -13,11 +13,11 @@ const ArticleSkeleton = ({ variant = 'card' }) => {
 	if (variant === 'list') {
 		return (
 			<div className='animate-pulse flex gap-3'>
-				<div className='w-full max-w-[100px] h-[100px] bg-gray-300 rounded'></div>
+				<div className='w-full max-w-[200px] h-[200px] bg-gray-300 rounded'></div>
 				<div className='flex-1'>
-					<div className='h-5 bg-gray-300 rounded w-3/4 mb-2'></div>
-					<div className='h-4 bg-gray-300 rounded w-full mb-1'></div>
-					<div className='h-4 bg-gray-300 rounded w-2/3'></div>
+					<div className='h-15 bg-gray-300 rounded w-3/4 mb-2'></div>
+					<div className='h-5 bg-gray-300 rounded w-full mb-1'></div>
+					<div className='h-5 bg-gray-300 rounded w-2/3'></div>
 				</div>
 			</div>
 		);

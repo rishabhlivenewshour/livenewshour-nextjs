@@ -10,13 +10,12 @@ import ArticleSkeleton from '@/components/article/ArticleSkeleton';
 import ArticleFeed from '@/components/article/ArticleFeed';
 
 const Home = async () => {
-	const heroArticles = await getHeroArticles();
+	const { articles: heroArticles } = await getHeroArticles({
+		page: 1,
+		pageSize: 4,
+	});
 	const categories = await getCategories();
-	const articlesData = await getArticles({ page: 1, pageSize: 30 });
-
-	const articles = Array.isArray(articlesData.articles)
-		? articlesData.articles
-		: [];
+	const { articles } = await getArticles({ page: 1, pageSize: 30 });
 
 	return (
 		<div className=''>
@@ -69,11 +68,13 @@ const Home = async () => {
 					<div className='pl-0 lg:pl-5'>
 						<InstagramFeed />
 					</div>
-					<div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
-						{categories.slice(0, 12).map((category) => (
-							<ArticleFeedByCategory key={category.id} category={category} />
-						))}
-					</div>
+					{categories.length > 0 && (
+						<div className='grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-10'>
+							{categories.slice(0).map((category) => (
+								<ArticleFeedByCategory key={category.id} category={category} />
+							))}
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

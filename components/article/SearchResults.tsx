@@ -1,11 +1,16 @@
+'use client';
+
 import { Article } from '@/types/article';
 import Link from 'next/link';
 import ArticleSkeleton from './ArticleSkeleton';
 import { LoaderIcon } from '../common/Icons';
 import ImageWithSkeleton from '../common/ImageWithSkeleton';
+import { useEffect, useState } from 'react';
+import { getArticles } from '@/services/article.service';
+import Heading from '../ui/Heading';
 
 interface SearchResultsProps {
-  debouncedQuery:string;
+	debouncedQuery: string;
 	results: Article[];
 	hasMore: boolean;
 	observerRef: (node: HTMLDivElement | null) => void;
@@ -14,13 +19,24 @@ interface SearchResultsProps {
 }
 
 const SearchResults = ({
-  debouncedQuery,
+	debouncedQuery,
 	results,
 	hasMore,
 	observerRef,
 	loading,
 	currentPage,
 }: SearchResultsProps) => {
+	const [recentArticles, setRecentArticles] = useState<Article[] | null>(null);
+
+	const loadRecentArticles = async () => {
+		const data = await getArticles({ page: 1, pageSize: 15 });
+
+		setRecentArticles(data?.articles);
+	};
+	useEffect(() => {
+		loadRecentArticles();
+	}, []);
+
 	return (
 		<div className='flex flex-col gap-5 my-10'>
 			{results.length > 0 ? (
@@ -35,6 +51,7 @@ const SearchResults = ({
 								<ImageWithSkeleton
 									src={article.banner_image}
 									alt={article.title}
+									parentClassName='w-full max-w-[150px] lg:max-w-[200px] h-[150px]'
 								/>
 							)}
 							<div className='flex-1'>
@@ -96,6 +113,37 @@ const SearchResults = ({
 									? 'No results found'
 									: 'Start typing to search articles'}
 							</p>
+							{recentArticles && recentArticles.length > 0 && (
+								<div className='w-full flex flex-col'>
+									<Heading title='Read Latest news' size='sm' />
+									<div className='flex flex-col gap-5 mt-5'>
+										{recentArticles.map((article) => (
+											<Link
+												href={`/news/articles/${article.slug}`}
+												key={article.id}
+												className='flex gap-3 hover:bg-gray-100 p-2 rounded transition'
+											>
+												{article.banner_image && (
+													<ImageWithSkeleton
+														src={article.banner_image}
+														alt={article.title}
+														parentClassName='w-full max-w-[150px] lg:max-w-[200px] h-[150px]'
+													/>
+												)}
+												<div className='flex-1'>
+													<h2 className='font-semibold'>{article.title}</h2>
+													<p className='w-full text-sm text-light h-15 overflow-hidden line-clamp-3'>
+														{article.summary}
+													</p>
+													<p className='font-semibold text-xs text-primary'>
+														{article.category_name}
+													</p>
+												</div>
+											</Link>
+										))}
+									</div>
+								</div>
+							)}
 						</>
 					)}
 				</div>

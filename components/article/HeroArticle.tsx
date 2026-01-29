@@ -19,7 +19,7 @@ const HeroArticle = ({ article }: HeroArticleProps) => {
 						<ImageWithSkeleton
 							src={article.banner_image}
 							alt={article.title}
-							parentClassName='w-full max-w-[450px] lg:max-w-[650px] h-[320px]'
+							parentClassName='w-full max-w-[450px] lg:max-w-[700px] h-[350px]'
 						/>
 					)}
 					<div className='mt-2'>

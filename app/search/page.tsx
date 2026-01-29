@@ -20,7 +20,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
 	const categories = await getCategories();
 
 	return (
-		<div className='py-5'>
+		<div className=''>
 			<div className='flex flex-col lg:flex-row gap-10 pt-5 pb-16 tracking-wide'>
 				<div className='w-full lg:w-[25%] flex flex-row lg:flex-col flex-wrap lg:flex-nowrap gap-10 order-2 lg:order-1'>
 					{categories

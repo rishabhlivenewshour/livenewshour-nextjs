@@ -7,6 +7,7 @@ import { Category } from '@/types/category';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ImageWithSkeleton from '../common/ImageWithSkeleton';
+import { ChevronRightIcon } from '../common/Icons';
 
 interface ArticleFeedByCategoryClientProps {
 	category: Category;
@@ -31,7 +32,7 @@ const ArticleFeedByCategoryClient = ({
 			},
 			{
 				threshold: 0.1,
-				rootMargin: '50px',
+				rootMargin: '10px',
 			},
 		);
 
@@ -48,12 +49,12 @@ const ArticleFeedByCategoryClient = ({
 				<Heading title={category.name} size='sm' />
 				{categoryArticles.length >= 4 && (
 					<button
-						className='flex gap-0.5 py-0.75 hover:text-primary transition'
+						className='flex gap-0.25 py-0.75 items-center justify-center hover:text-primary transition break'
 						onClick={() => router.push(`/news/topics/${category.slug}`)}
-						aria-label={`View all ${category.name} articles`}
+						aria-label={`More ${category.name} articles`}
 					>
-						<span className='text-xs'>View all</span>
-						{/* <ChevronRightIcon size={15} /> */}
+						<span className='text-xs'>Read</span>
+						<ChevronRightIcon size={14} />
 					</button>
 				)}
 			</div>

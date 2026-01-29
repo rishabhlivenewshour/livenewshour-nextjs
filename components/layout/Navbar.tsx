@@ -68,11 +68,11 @@ const Navbar = ({ categories }: NavbarProps) => {
 							className='flex flex-col justify-between items-center hover:text-primary active:text-primary transition-all duration-300 ease-in-out w-fit border-r-2 border-gray-400'
 						>
 							<p className='px-4'>{item.name}</p>
-							<p
+							{/* <p
 								className={`bg-back w-full h-[2px] ${
 									pathname.includes(item.slug) ? 'block' : 'hidden'
 								}`}
-							></p>
+							></p> */}
 						</Link>
 					))}
 				<button onClick={() => setShowSidebar(true)}>

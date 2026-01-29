@@ -1,7 +1,7 @@
 import { Article } from '@/types/article';
-import Image from 'next/image';
 import Link from 'next/link';
 import Heading from '../ui/Heading';
+import ImageWithSkeleton from '../common/ImageWithSkeleton';
 
 interface ArticleFeedProps {
 	heading: string;
@@ -11,7 +11,7 @@ interface ArticleFeedProps {
 const ArticleFeed = ({ heading, articles }: ArticleFeedProps) => {
 	return (
 		<div className='mt-10'>
-            <Heading title={heading} size='md'/>
+			<Heading title={heading} size='md' />
 			<div className='mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-10 text-sm tracking-wide'>
 				{articles.map((article) => (
 					<Link
@@ -21,13 +21,10 @@ const ArticleFeed = ({ heading, articles }: ArticleFeedProps) => {
 					>
 						{article.banner_image && (
 							<div className='flex gap-2'>
-								<Image
+								<ImageWithSkeleton
 									src={article.banner_image}
 									alt={article.title}
-                                    height={200}
-                                    width={200}
-									className='w-full h-[200px] object-cover rounded'
-									
+									parentClassName='w-full max-w-[250px] lg:max-w-[300px] h-[200px]'
 								/>
 							</div>
 						)}

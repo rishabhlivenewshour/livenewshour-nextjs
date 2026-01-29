@@ -2,7 +2,7 @@
 
 import Input from '../ui/Input';
 import { SearchIcon } from '../common/Icons';
-import { Article, ArticleByCategoryResponse } from '@/types/article';
+import { Article, ServiceResult } from '@/types/article';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
 import { getArticlesBySearchClient } from '@/services/article.service';
@@ -11,7 +11,7 @@ import SearchResults from './SearchResults';
 
 interface SearchClientProps {
 	initialQuery: string;
-	initialData: ArticleByCategoryResponse;
+	initialData: ServiceResult<Article[]>;
 }
 
 const SearchClient = ({ initialQuery, initialData }: SearchClientProps) => {

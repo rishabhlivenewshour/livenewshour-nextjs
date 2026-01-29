@@ -19,7 +19,8 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	const categories = await getCategories();
-	const tickerArticles = await getArticlesForTicker();
+	const tickerArticles = (await getArticlesForTicker({ page: 1, pageSize: 10 }))
+		.articles;
 
 	return (
 		<html lang='en'>

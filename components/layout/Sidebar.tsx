@@ -39,7 +39,8 @@ const Sidebar = ({ categories, setShowSidebar }: SidebarProps) => {
 						}`}
 					>
 						<Link
-							href={category.slug}
+							href={`/news/topics/${category.slug}`}
+							onClick={() => setShowSidebar(false)}
 							className='w-full flex items-center justify-between gap-2'
 						>
 							<span

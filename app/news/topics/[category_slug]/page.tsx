@@ -1,4 +1,5 @@
 import ArticleFeed from '@/components/article/ArticleFeed';
+import ArticleNotFound from '@/components/article/ArticleNotFound';
 import HeroArticle from '@/components/article/HeroArticle';
 import InfiniteArticles from '@/components/article/InfiniteArticles';
 import Heading from '@/components/ui/Heading';
@@ -27,13 +28,16 @@ const CategoryArticlesPage = async ({ params }: CategoryArticlesProps) => {
 			page: 1,
 			pageSize: 15,
 		});
-		articles = Array.isArray(data?.articles) ? data.articles : [];
+
+		articles = data.articles;
 		total_pages = data?.pagination?.totalPages || 1;
-	} else {
-		return null;
 	}
 
-	if (articles.length === 0) return null;
+	if (!category || articles.length === 0) {
+		return (
+			<ArticleNotFound error='The articles for this topic do not exist.' />
+		);
+	}
 
 	return (
 		<div className='w-full flex justify-center'>

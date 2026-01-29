@@ -11,13 +11,11 @@ const ArticleFeedByCategory = async ({
 }: ArticleFeedByCategoryProps) => {
 	if (!category.id) return null;
 
-	const data = await getArticlesByCategory({
+	const { articles } = await getArticlesByCategory({
 		categoryId: category.id,
 		page: 1,
 		pageSize: 4,
 	});
-
-	const articles = Array.isArray(data?.articles) ? data.articles : [];
 
 	if (articles.length === 0) return null;
 

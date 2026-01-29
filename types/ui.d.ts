@@ -1,20 +1,20 @@
 import { ChangeEvent, SVGProps } from 'react';
 
-type IconProps = SVGProps<SVGSVGElement> & {
+export type IconProps = SVGProps<SVGSVGElement> & {
 	size?: number;
 };
 
-type HeadingSizes = 'sm' | 'md' | 'lg' | 'xl';
+export type HeadingSizes = 'sm' | 'md' | 'lg' | 'xl';
 
-interface HeadingProps {
+export interface HeadingProps {
 	title: string;
 	className?: string;
 	size: HeadingSizes;
 }
 
-type InputTypeProps = 'text' | 'email' | 'password';
+export type InputTypeProps = 'text' | 'email' | 'password';
 
-interface InputProps {
+export interface InputProps {
 	type?: InputTypeProps;
 	placeholder: string;
 	value?: string;

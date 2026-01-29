@@ -1,3 +1,5 @@
+import { HeadingProps, HeadingSizes } from '@/types/ui';
+
 const SizeClasses: Record<HeadingSizes, string> = {
 	sm: 'text-sm py-0.5 px-2',
 	md: 'text-xl py-1 px-3',

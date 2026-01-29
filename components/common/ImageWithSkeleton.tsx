@@ -36,7 +36,7 @@ const ImageWithSkeleton = ({
 				className={`object-cover rounded transition-opacity duration-300 ${
 					loaded ? 'opacity-100' : 'opacity-0'
 				} ${imageClassName}`}
-				onLoadingComplete={() => setLoaded(true)}
+				onLoad={() => setLoaded(true)}
 			/>
 		</div>
 	);

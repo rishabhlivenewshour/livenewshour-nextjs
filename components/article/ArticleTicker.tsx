@@ -7,6 +7,8 @@ interface ArticleTickerProps {
 }
 
 const ArticleTicker = ({ articles }: ArticleTickerProps) => {
+	if (articles.length === 0) return null;
+
 	return (
 		<div className='w-full bg-primary text-white shadow-sm pt-0.5 pb-1'>
 			<div className='flex'>
