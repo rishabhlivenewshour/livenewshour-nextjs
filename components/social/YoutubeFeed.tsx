@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { YoutubeIcon } from '../common/Icons';
 import Link from 'next/link';
 import Image from 'next/image';
-import { YoutubeChannel, YoutubeVideo } from '@/types/social';
+import { YoutubeChannel, YoutubeVideo } from '@/types/social.types';
 
 const YoutubeFeed = () => {
 	const [videos, setVideos] = useState<YoutubeVideo[]>([]);

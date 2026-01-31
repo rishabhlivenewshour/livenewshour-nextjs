@@ -1,7 +1,7 @@
 import Logo from '../common/Logo';
 import { FacebookIcon, InstagramIcon, XTwitterIcon } from '../common/Icons';
 import Link from 'next/link';
-import { Category } from '@/types/category';
+import { Category } from '@/types/category.types';
 import { useMemo } from 'react';
 import SocialLink from '../common/SocialLink';
 

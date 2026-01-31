@@ -1,5 +1,5 @@
 import { calculateReadTime, formatDate } from '@/lib/common';
-import { Article } from '@/types/article';
+import { Article } from '@/types/article.types';
 import { CalendarIcon, ClockIcon, TagIcon, UserIcon } from '../common/Icons';
 
 interface ArticleInfoProps {

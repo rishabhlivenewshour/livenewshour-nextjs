@@ -1,13 +1,13 @@
 'use client';
 
-import { Article } from '@/types/article';
-import Heading from '../ui/Heading';
+import { Article } from '@/types/article.types';
 import { useEffect, useRef, useState } from 'react';
-import { Category } from '@/types/category';
+import { Category } from '@/types/category.types';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import ImageWithSkeleton from '../common/ImageWithSkeleton';
-import { ChevronRightIcon } from '../common/Icons';
+import Heading from '@/components/ui/Heading';
+import { ChevronRightIcon } from '@/components/common/Icons';
+import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 
 interface ArticleFeedByCategoryClientProps {
 	category: Category;

@@ -16,9 +16,7 @@ import {
 
 // Generate base metadata with common fields
 // Used as foundation for all page metadata
-export function generateBaseMetadata(
-	options: SEOMetadataOptions
-): Metadata {
+export function generateBaseMetadata(options: SEOMetadataOptions): Metadata {
 	const {
 		title,
 		description,
@@ -43,13 +41,13 @@ export function generateBaseMetadata(
 					width: OG_IMAGE_DIMENSIONS.width,
 					height: OG_IMAGE_DIMENSIONS.height,
 					alt: title,
-			  }
+				}
 			: image || {
 					url: SEO_CONFIG.defaultImage,
 					width: OG_IMAGE_DIMENSIONS.width,
 					height: OG_IMAGE_DIMENSIONS.height,
 					alt: SEO_CONFIG.siteName,
-			  };
+				};
 
 	// Build robots configuration
 	const robots = noIndex || noFollow ? NO_INDEX_ROBOTS : DEFAULT_ROBOTS;
@@ -66,7 +64,7 @@ export function generateBaseMetadata(
 		alternates: canonical
 			? {
 					canonical,
-			  }
+				}
 			: undefined,
 		openGraph: {
 			type,
@@ -99,9 +97,7 @@ export function generateBaseMetadata(
 
 // Generate metadata for article pages
 // Includes all necessary SEO fields for news articles
-export function generateArticleMetadata(
-	articleData: ArticleSEOData
-): Metadata {
+export function generateArticleMetadata(articleData: ArticleSEOData): Metadata {
 	const canonical = `/news/articles/${articleData.slug}`;
 	const fullUrl = `${SEO_CONFIG.siteUrl}${canonical}`;
 
@@ -128,7 +124,7 @@ export function generateArticleMetadata(
 // Generate metadata for category/topic pages
 // Optimized for listing pages
 export function generateCategoryMetadata(
-	categoryData: CategorySEOData
+	categoryData: CategorySEOData,
 ): Metadata {
 	const canonical = `/news/topics/${categoryData.slug}`;
 	const fullUrl = `${SEO_CONFIG.siteUrl}${canonical}`;
@@ -167,7 +163,7 @@ export function generateSearchMetadata(searchData: SearchSEOData): Metadata {
 				resultsCount !== undefined
 					? `Found ${resultsCount} article${resultsCount !== 1 ? 's' : ''}.`
 					: ''
-		  }`
+			}`
 		: `Search for news articles on ${SEO_CONFIG.siteName}.`;
 
 	return generateBaseMetadata({
@@ -194,7 +190,7 @@ export function generateHomeMetadata(): Metadata {
 // Generate metadata for 404/error pages
 // Prevents indexing of error pages
 export function generateErrorMetadata(
-	errorMessage: string = 'Page Not Found'
+	errorMessage: string = 'Page Not Found',
 ): Metadata {
 	return generateBaseMetadata({
 		title: `${errorMessage} - ${SEO_CONFIG.siteName}`,
@@ -208,8 +204,16 @@ export function generateErrorMetadata(
 // Useful for page-specific overrides
 export function mergeMetadata(
 	base: Metadata,
-	custom: Partial<Metadata>
+	custom: Partial<Metadata>,
 ): Metadata {
+	const baseRobots =
+		typeof base.robots === 'object' && base.robots !== null ? base.robots : {};
+
+	const customRobots =
+		typeof custom.robots === 'object' && custom.robots !== null
+			? custom.robots
+			: {};
+
 	return {
 		...base,
 		...custom,
@@ -219,7 +223,7 @@ export function mergeMetadata(
 						...(base.openGraph || {}),
 						...(custom.openGraph || {}),
 					},
-			  }
+				}
 			: {}),
 		...(base.twitter || custom.twitter
 			? {
@@ -227,17 +231,15 @@ export function mergeMetadata(
 						...(base.twitter || {}),
 						...(custom.twitter || {}),
 					},
-			  }
+				}
 			: {}),
 		...(base.robots || custom.robots
 			? {
 					robots: {
-						...(base.robots || {}),
-						...(custom.robots || {}),
+						...baseRobots,
+						...customRobots,
 					},
-			  }
+				}
 			: {}),
 	};
 }
-
-

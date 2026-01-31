@@ -5,7 +5,7 @@ import { getCategories } from '@/services/category.service';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { getArticlesForTicker } from '@/services/article.service';
-import ArticleTicker from '@/components/article/ArticleTicker';
+import ArticleTicker from '@/components/article/ui/ArticleTicker';
 import { SEO_CONFIG } from '@/lib/seo.config';
 import { generateHomeMetadata } from '@/lib/seo.metadata';
 import JsonLd from '@/components/seo/JsonLd';
@@ -13,11 +13,10 @@ import {
 	generateOrganizationStructuredData,
 	generateWebSiteStructuredData,
 } from '@/lib/seo.structured-data';
+import { readCategories } from '@/lib/category.read';
 
-/**
- * Root metadata - applies to all pages unless overridden
- * Uses template pattern for dynamic title generation
- */
+// Root metadata - applies to all pages unless overridden
+// Uses template pattern for dynamic title generation
 export const metadata: Metadata = {
 	metadataBase: new URL(SEO_CONFIG.siteUrl),
 	...generateHomeMetadata(),
@@ -28,11 +27,9 @@ export const metadata: Metadata = {
 	applicationName: SEO_CONFIG.siteName,
 	referrer: 'origin-when-cross-origin',
 	category: 'news',
-	// Verification tags (add your actual verification codes)
+	// Verification tags
 	verification: {
-		google: 'your-google-site-verification-code',
-		// yandex: 'your-yandex-verification-code',
-		// bing: 'your-bing-verification-code',
+		google: 'j2roLLLOyonaNQWzr6DKdBJyfp5opSda4PsunDZTlvU',
 	},
 	// App-specific metadata
 	appleWebApp: {
@@ -56,10 +53,8 @@ export const metadata: Metadata = {
 	},
 };
 
-/**
- * Viewport configuration
- * Separated from metadata in Next.js 14+
- */
+// Viewport configuration
+// Separated from metadata in Next.js 14+
 export const viewport: Viewport = {
 	width: 'device-width',
 	initialScale: 1,
@@ -76,7 +71,7 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const categories = await getCategories();
+	const categories = await readCategories();
 	const tickerArticles = (await getArticlesForTicker({ page: 1, pageSize: 10 }))
 		.articles;
 
@@ -94,7 +89,7 @@ export default async function RootLayout({
 			<body className={`${Poppins.variable} antialiased`}>
 				<Navbar categories={categories} />
 				<ArticleTicker articles={tickerArticles} />
-				<div className='px-[5vw] sm:px-[14vw] py-5'>{children}</div>
+				<div className='px-[5vw] sm:px-[14vw] pt-5 pb-10'>{children}</div>
 				<Footer categories={categories} />
 			</body>
 		</html>

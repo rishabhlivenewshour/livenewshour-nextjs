@@ -11,7 +11,7 @@ import {
 	WhatsappIcon,
 	XTwitterIcon,
 } from '../common/Icons';
-import { Article } from '@/types/article';
+import { Article } from '@/types/article.types';
 
 const getShareUrls = (url: string, text: string) => ({
 	facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(

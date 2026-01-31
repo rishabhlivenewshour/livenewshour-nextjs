@@ -1,13 +1,9 @@
-'use client';
-
-import { Article } from '@/types/article';
+import { Article } from '@/types/article.types';
 import Link from 'next/link';
-import ArticleSkeleton from './ArticleSkeleton';
-import { LoaderIcon } from '../common/Icons';
-import ImageWithSkeleton from '../common/ImageWithSkeleton';
-import { useEffect, useState } from 'react';
-import { getArticles } from '@/services/article.service';
-import Heading from '../ui/Heading';
+import ArticleSkeleton from '../ui/ArticleSkeleton';
+import { LoaderIcon } from '../../common/Icons';
+import ImageWithSkeleton from '../../common/ImageWithSkeleton';
+import Heading from '../../ui/Heading';
 
 interface SearchResultsProps {
 	debouncedQuery: string;
@@ -16,6 +12,7 @@ interface SearchResultsProps {
 	observerRef: (node: HTMLDivElement | null) => void;
 	loading: boolean;
 	currentPage: number;
+	recentArticles: Article[];
 }
 
 const SearchResults = ({
@@ -25,18 +22,8 @@ const SearchResults = ({
 	observerRef,
 	loading,
 	currentPage,
+	recentArticles,
 }: SearchResultsProps) => {
-	const [recentArticles, setRecentArticles] = useState<Article[] | null>(null);
-
-	const loadRecentArticles = async () => {
-		const data = await getArticles({ page: 1, pageSize: 15 });
-
-		setRecentArticles(data?.articles);
-	};
-	useEffect(() => {
-		loadRecentArticles();
-	}, []);
-
 	return (
 		<div className='flex flex-col gap-5 my-10'>
 			{results.length > 0 ? (

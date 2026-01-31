@@ -1,7 +1,7 @@
-import { Article } from '@/types/article';
+import { Article } from '@/types/article.types';
 import HeroArticle from './HeroArticle';
-import ArticleSkeleton from './ArticleSkeleton';
 import HeroArticleCard from './HeroArticleCard';
+import ArticleSkeleton from '../ui/ArticleSkeleton';
 
 interface HeroSectionProps {
 	heroArticle: Article;

@@ -1,8 +1,7 @@
 import ArticleData from '@/components/article/ArticleData';
 import ArticleInfo from '@/components/article/ArticleInfo';
-import ArticleNotFound from '@/components/article/ArticleNotFound';
 import ArticleShare from '@/components/article/ArticleShare';
-import RelatedArticles from '@/components/article/RelatedArticles';
+import RelatedArticles from '@/components/article/feed/RelatedArticles';
 import JsonLd from '@/components/seo/JsonLd';
 import { readArticleBySlug } from '@/lib/article.read';
 import { generateArticleMetadata } from '@/lib/seo.metadata';
@@ -11,7 +10,7 @@ import {
 	generateBreadcrumbStructuredData,
 } from '@/lib/seo.structured-data';
 import { getRelatedArticles } from '@/services/article.service';
-import { Article } from '@/types/article';
+import { Article } from '@/types/article.types';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -21,10 +20,8 @@ interface ArticlePageProps {
 	};
 }
 
-/**
- * Generate metadata for article pages
- * This runs at build time for static pages and on-demand for dynamic pages
- */
+// Generate metadata for article pages
+// This runs at build time for static pages and on-demand for dynamic pages
 export async function generateMetadata({
 	params,
 }: ArticlePageProps): Promise<Metadata> {

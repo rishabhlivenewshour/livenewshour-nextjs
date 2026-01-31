@@ -1,12 +1,5 @@
-/**
- * SEO Utility Functions
- * Helper functions for common SEO operations
- */
-
-/**
- * Truncate text to specified length for meta descriptions
- * Ensures description stays within optimal length (150-160 chars)
- */
+// Truncate text to specified length for meta descriptions
+// Ensures description stays within optimal length (150-160 chars)
 export function truncateDescription(
 	text: string,
 	maxLength: number = 160,
@@ -24,10 +17,8 @@ export function truncateDescription(
 	return truncated + '...';
 }
 
-/**
- * Generate clean URL slug from text
- * Useful for creating SEO-friendly URLs
- */
+// Generate clean URL slug from text
+// Useful for creating SEO-friendly URLs
 export function generateSlug(text: string): string {
 	return text
 		.toLowerCase()
@@ -38,10 +29,8 @@ export function generateSlug(text: string): string {
 		.replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
 }
 
-/**
- * Extract plain text from HTML
- * Useful for generating meta descriptions from HTML content
- */
+// Extract plain text from HTML
+// Useful for generating meta descriptions from HTML content
 export function stripHtml(html: string): string {
 	return html
 		.replace(/<[^>]*>/g, '') // Remove HTML tags
@@ -49,19 +38,15 @@ export function stripHtml(html: string): string {
 		.trim();
 }
 
-/**
- * Format date for Open Graph and Schema.org
- * Returns ISO 8601 format
- */
+// Format date for Open Graph and Schema.org
+// Returns ISO 8601 format
 export function formatDateForSEO(date: string | Date): string {
 	const dateObj = typeof date === 'string' ? new Date(date) : date;
 	return dateObj.toISOString();
 }
 
-/**
- * Validate and ensure absolute URL
- * Converts relative URLs to absolute
- */
+// Validate and ensure absolute URL
+// Converts relative URLs to absolute
 export function ensureAbsoluteUrl(url: string, baseUrl: string): string {
 	if (url.startsWith('http://') || url.startsWith('https://')) {
 		return url;
@@ -77,10 +62,8 @@ export function ensureAbsoluteUrl(url: string, baseUrl: string): string {
 	return `${cleanBaseUrl}/${cleanUrl}`;
 }
 
-/**
- * Generate reading time estimate
- * Assumes average reading speed of 200 words per minute
- */
+// Generate reading time estimate
+// Assumes average reading speed of 200 words per minute
 export function estimateReadingTime(text: string): number {
 	const wordsPerMinute = 200;
 	const wordCount = text.trim().split(/\s+/).length;
@@ -88,10 +71,8 @@ export function estimateReadingTime(text: string): number {
 	return readingTime;
 }
 
-/**
- * Sanitize keywords array
- * Removes empty strings, duplicates, and limits count
- */
+// Sanitize keywords array
+// Removes empty strings, duplicates, and limits count
 export function sanitizeKeywords(
 	keywords: string[],
 	maxKeywords: number = 10,
@@ -101,19 +82,15 @@ export function sanitizeKeywords(
 		.slice(0, maxKeywords);
 }
 
-/**
- * Generate Twitter handle from username
- * Ensures proper @ prefix
- */
+// Generate Twitter handle from username
+// Ensures proper @ prefix
 export function formatTwitterHandle(username: string): string {
 	const clean = username.trim().replace('@', '');
 	return `@${clean}`;
 }
 
-/**
- * Validate Open Graph image dimensions
- * Checks if image meets recommended sizes
- */
+// Validate Open Graph image dimensions
+// Checks if image meets recommended sizes
 export function validateOgImageDimensions(
 	width: number,
 	height: number,
@@ -147,10 +124,8 @@ export function validateOgImageDimensions(
 	return { isValid, warnings };
 }
 
-/**
- * Generate breadcrumb schema items from path
- * Useful for automatic breadcrumb generation
- */
+// Generate breadcrumb schema items from path
+// Useful for automatic breadcrumb generation
 export function generateBreadcrumbItems(
 	pathname: string,
 	baseUrl: string,
@@ -179,10 +154,8 @@ export function generateBreadcrumbItems(
 	return items;
 }
 
-/**
- * Calculate content freshness score
- * Returns score 0-100 based on how recent the content is
- */
+// Calculate content freshness score
+// Returns score 0-100 based on how recent the content is
 export function calculateFreshnessScore(publishedDate: Date): number {
 	const now = new Date();
 	const ageInDays = Math.floor(

@@ -1,7 +1,7 @@
-import { Article } from '@/types/article';
+import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
+import Heading from '@/components/ui/Heading';
+import { Article } from '@/types/article.types';
 import Link from 'next/link';
-import Heading from '../ui/Heading';
-import ImageWithSkeleton from '../common/ImageWithSkeleton';
 
 interface ArticleFeedProps {
 	heading: string;

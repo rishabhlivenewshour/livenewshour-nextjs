@@ -8,11 +8,9 @@ interface ErrorProps {
 	reset: () => void;
 }
 
-/**
- * Error Page Component
- * Handles runtime errors gracefully
- * Note: Error pages cannot use generateMetadata, so SEO is handled via noindex
- */
+// Error Page Component
+// Handles runtime errors gracefully
+// Note: Error pages cannot use generateMetadata, so SEO is handled via noindex
 export default function Error({ error, reset }: ErrorProps) {
 	useEffect(() => {
 		// Log the error to an error reporting service

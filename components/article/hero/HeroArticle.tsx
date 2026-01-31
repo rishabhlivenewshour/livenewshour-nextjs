@@ -1,7 +1,7 @@
+import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import { formatDate } from '@/lib/common';
-import { Article } from '@/types/article';
+import { Article } from '@/types/article.types';
 import Link from 'next/link';
-import ImageWithSkeleton from '../common/ImageWithSkeleton';
 
 interface HeroArticleProps {
 	article: Article;

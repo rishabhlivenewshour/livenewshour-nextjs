@@ -1,14 +1,14 @@
-import ArticleFeed from '@/components/article/ArticleFeed';
-import ArticleNotFound from '@/components/article/ArticleNotFound';
-import HeroArticle from '@/components/article/HeroArticle';
-import InfiniteArticles from '@/components/article/InfiniteArticles';
+import ArticleFeed from '@/components/article/feed/ArticleFeed';
+import InfiniteArticles from '@/components/article/feed/InfiniteArticles';
+import HeroArticle from '@/components/article/hero/HeroArticle';
 import JsonLd from '@/components/seo/JsonLd';
 import Heading from '@/components/ui/Heading';
+import { readCategories } from '@/lib/category.read';
 import { generateCategoryMetadata } from '@/lib/seo.metadata';
 import { generateBreadcrumbStructuredData } from '@/lib/seo.structured-data';
 import { getArticlesByCategory } from '@/services/article.service';
 import { getCategories } from '@/services/category.service';
-import { Article } from '@/types/article';
+import { Article } from '@/types/article.types';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -18,14 +18,12 @@ interface CategoryArticlesProps {
 	};
 }
 
-/**
- * Generate metadata for category pages
- */
+// Generate metadata for category pages
 export async function generateMetadata({
 	params,
 }: CategoryArticlesProps): Promise<Metadata> {
 	const { category_slug } = await params;
-	const categories = await getCategories();
+	const categories = await readCategories();
 	const category = categories.find((cat) => cat.slug === category_slug);
 
 	if (!category) {
@@ -48,7 +46,7 @@ export async function generateMetadata({
 
 const CategoryArticlesPage = async ({ params }: CategoryArticlesProps) => {
 	const { category_slug } = await params;
-	const categories = await getCategories();
+	const categories = await readCategories();
 
 	const category = categories.find((cat) => cat.slug === category_slug);
 

@@ -1,5 +1,5 @@
 'use client';
-import { Category } from '@/types/category';
+import { Category } from '@/types/category.types';
 import Link from 'next/link';
 import { useState } from 'react';
 import Logo from '../common/Logo';

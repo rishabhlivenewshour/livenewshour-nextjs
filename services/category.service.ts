@@ -1,4 +1,4 @@
-import { Category } from '@/types/category';
+import { Category } from '@/types/category.types';
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 

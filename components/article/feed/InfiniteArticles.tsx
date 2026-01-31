@@ -1,10 +1,10 @@
 'use client';
 
-import { Article } from '@/types/article';
+import { Article } from '@/types/article.types';
 import { useEffect, useRef, useState } from 'react';
 import ArticleFeed from './ArticleFeed';
 import { getArticlesByCategoryClient } from '@/services/article.service';
-import ArticleSkeleton from './ArticleSkeleton';
+import ArticleSkeleton from '../ui/ArticleSkeleton';
 
 interface InfiniteArticlesProps {
 	categoryId: string;

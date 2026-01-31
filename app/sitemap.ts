@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { SEO_CONFIG } from '@/lib/seo.config';
 import { getArticles } from '@/services/article.service';
-import { getCategories } from '@/services/category.service';
+import { readCategories } from '@/lib/category.read';
 
 /**
  * Dynamic Sitemap Generator
@@ -30,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	// Fetch categories
 	let categoryPages: MetadataRoute.Sitemap = [];
 	try {
-		const categories = await getCategories();
+		const categories = await readCategories();
 		categoryPages = categories.map((category) => ({
 			url: `${baseUrl}/news/topics/${category.slug}`,
 			lastModified: new Date(),

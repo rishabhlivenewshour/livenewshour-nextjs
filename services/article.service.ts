@@ -1,4 +1,8 @@
-import { Article, ArticleAPIResponse, ServiceResult } from '@/types/article';
+import {
+	Article,
+	ArticleAPIResponse,
+	ServiceResult,
+} from '@/types/article.types';
 import {
 	GetArticleBySlugParams,
 	GetArticlesByCategoryParams,

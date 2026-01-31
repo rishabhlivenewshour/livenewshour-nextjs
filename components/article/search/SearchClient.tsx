@@ -1,11 +1,11 @@
 'use client';
 
-import Input from '../ui/Input';
-import { SearchIcon } from '../common/Icons';
-import { Article, ServiceResult } from '@/types/article';
+import Input from '../../ui/Input';
+import { SearchIcon } from '../../common/Icons';
+import { Article, ServiceResult } from '@/types/article.types';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
-import { getArticlesBySearchClient } from '@/services/article.service';
+import { getArticles, getArticlesBySearchClient } from '@/services/article.service';
 import { useRouter } from 'next/navigation';
 import SearchResults from './SearchResults';
 
@@ -24,6 +24,8 @@ const SearchClient = ({ initialQuery, initialData }: SearchClientProps) => {
 	const [query, setQuery] = useState(initialQuery);
 	const [results, setResults] = useState<Article[]>(initialData.articles);
 	const [hasMore, setHasMore] = useState(initialData.pagination.totalPages > 1);
+	
+	const [recentArticles, setRecentArticles] = useState<Article[]>([]);
 
 	const debouncedQuery = useDebounce({ value: query, delay: 500 });
 
@@ -41,6 +43,19 @@ const SearchClient = ({ initialQuery, initialData }: SearchClientProps) => {
 
 		loadNextPage(true);
 	}, [debouncedQuery]);
+
+	useEffect(() => {
+	let mounted = true;
+
+	(async () => {
+		const data = await getArticles({ page: 1, pageSize: 15 });
+		if (mounted) setRecentArticles(data?.articles ?? []);
+	})();
+
+	return () => {
+		mounted = false;
+	};
+}, []);
 
 	const loadNextPage = async (isFirst = false) => {
 		if (!debouncedQuery || !hasMore || loadingRef.current) return;
@@ -125,6 +140,7 @@ const SearchClient = ({ initialQuery, initialData }: SearchClientProps) => {
 				observerRef={observerRef}
 				loading={loadingRef.current}
 				currentPage={pageRef.current}
+				recentArticles={recentArticles}
 			/>
 		</div>
 	);

@@ -2,15 +2,11 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { generateErrorMetadata } from '@/lib/seo.metadata';
 
-/**
- * 404 page metadata
- */
+// 404 page metadata
 export const metadata: Metadata = generateErrorMetadata('Page Not Found');
 
-/**
- * 404 Not Found Page
- * Displayed when a route doesn't exist
- */
+// 404 Not Found Page
+// Displayed when a route doesn't exist
 export default function NotFound() {
 	return (
 		<div className='min-h-[60vh] flex flex-col items-center justify-center px-4'>

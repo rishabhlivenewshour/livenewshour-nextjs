@@ -1,9 +1,9 @@
-import ArticleFeedByCategory from '@/components/article/ArticleFeedByCategory.server';
-import SearchClient from '@/components/article/SearchClient';
+import ArticleFeedByCategory from '@/components/article/feed/ArticleFeedByCategory.server';
+import SearchClient from '@/components/article/search/SearchClient';
+import { readCategories } from '@/lib/category.read';
 import { generateSearchMetadata } from '@/lib/seo.metadata';
 import { getArticlesBySearch } from '@/services/article.service';
-import { getCategories } from '@/services/category.service';
-import { Article, ServiceResult } from '@/types/article';
+import { Article, ServiceResult } from '@/types/article.types';
 import { Metadata } from 'next';
 
 interface SearchPageProps {
@@ -12,10 +12,8 @@ interface SearchPageProps {
 	};
 }
 
-/**
- * Generate metadata for search pages
- * Dynamically includes search query in title and description
- */
+// Generate metadata for search pages
+// Dynamically includes search query in title and description
 export async function generateMetadata({
 	searchParams,
 }: SearchPageProps): Promise<Metadata> {
@@ -47,7 +45,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
 		});
 	}
 
-	const categories = await getCategories();
+	const categories = await readCategories();
 
 	return (
 		<div className=''>

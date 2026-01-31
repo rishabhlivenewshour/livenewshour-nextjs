@@ -1,4 +1,4 @@
-import { InputProps } from '@/types/ui';
+import { InputProps } from '@/types/ui.types';
 
 const Input = ({
 	type = 'text',

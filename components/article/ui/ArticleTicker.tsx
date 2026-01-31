@@ -1,4 +1,4 @@
-import { Article } from '@/types/article';
+import { Article } from '@/types/article.types';
 import Link from 'next/link';
 import Marquee from 'react-fast-marquee';
 

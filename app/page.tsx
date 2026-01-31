@@ -1,22 +1,20 @@
-import HeroSection from '@/components/article/HeroSection';
 import Heading from '@/components/ui/Heading';
 import { getArticles, getHeroArticles } from '@/services/article.service';
 import FacebookFeed from '@/components/social/FacebookFeed';
 import InstagramFeed from '@/components/social/InstagramFeed';
 import YoutubeFeed from '@/components/social/YoutubeFeed';
 import { getCategories } from '@/services/category.service';
-import ArticleFeedByCategory from '@/components/article/ArticleFeedByCategory.server';
-import ArticleSkeleton from '@/components/article/ArticleSkeleton';
-import ArticleFeed from '@/components/article/ArticleFeed';
+import ArticleSkeleton from '@/components/article/ui/ArticleSkeleton';
 import { generateHomeMetadata } from '@/lib/seo.metadata';
 import { Metadata } from 'next';
-import { Category } from '@/types/category';
-import { Article } from '@/types/article';
+import { Category } from '@/types/category.types';
+import { Article } from '@/types/article.types';
+import HeroSection from '@/components/article/hero/HeroSection';
+import ArticleFeed from '@/components/article/feed/ArticleFeed';
+import ArticleFeedByCategory from '@/components/article/feed/ArticleFeedByCategory.server';
 
-/**
- * Home page metadata
- * Uses the default SEO configuration
- */
+// Home page metadata
+// Uses the default SEO configuration
 export const metadata: Metadata = generateHomeMetadata();
 
 const Home = async () => {
@@ -41,11 +39,13 @@ const Home = async () => {
 
 	return (
 		<div className=''>
+			{/* Hero Section */}
 			<Heading title='Headlines' size='xl' />
 			<HeroSection
 				heroArticle={heroArticles[0]}
 				articles={heroArticles.slice(1)}
 			/>
+
 			<div className='flex flex-col lg:flex-row gap-5 pt-5 pb-16 mt-5'>
 				<div className='w-full lg:w-[60%]'>
 					{articles.length === 0 ? (
@@ -90,6 +90,7 @@ const Home = async () => {
 					<div className='pl-0 lg:pl-5'>
 						<InstagramFeed />
 					</div>
+
 					{categories.length > 0 && (
 						<div className='grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-10'>
 							{categories.slice(0).map((category) => (

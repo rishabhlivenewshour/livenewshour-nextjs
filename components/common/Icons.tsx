@@ -1,4 +1,4 @@
-import { IconProps } from '@/types/ui';
+import { IconProps } from '@/types/ui.types';
 
 export const MenuIcon = ({ size = 24, ...props }: IconProps) => (
 	<svg
