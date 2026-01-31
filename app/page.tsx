@@ -8,14 +8,36 @@ import { getCategories } from '@/services/category.service';
 import ArticleFeedByCategory from '@/components/article/ArticleFeedByCategory.server';
 import ArticleSkeleton from '@/components/article/ArticleSkeleton';
 import ArticleFeed from '@/components/article/ArticleFeed';
+import { generateHomeMetadata } from '@/lib/seo.metadata';
+import { Metadata } from 'next';
+import { Category } from '@/types/category';
+import { Article } from '@/types/article';
+
+/**
+ * Home page metadata
+ * Uses the default SEO configuration
+ */
+export const metadata: Metadata = generateHomeMetadata();
 
 const Home = async () => {
-	const { articles: heroArticles } = await getHeroArticles({
-		page: 1,
-		pageSize: 4,
-	});
-	const categories = await getCategories();
-	const { articles } = await getArticles({ page: 1, pageSize: 30 });
+	let heroArticles: Article[] = [];
+	let articles: Article[] = [];
+	let categories: Category[] = [];
+
+	try {
+		// Fetch all data in parallel for better performance
+		const [heroData, articlesData, categoriesData] = await Promise.all([
+			getHeroArticles({ page: 1, pageSize: 4 }),
+			getArticles({ page: 1, pageSize: 30 }),
+			getCategories(),
+		]);
+
+		heroArticles = heroData.articles;
+		articles = articlesData.articles;
+		categories = categoriesData;
+	} catch (error) {
+		console.error('Error fetching home page data:', error);
+	}
 
 	return (
 		<div className=''>

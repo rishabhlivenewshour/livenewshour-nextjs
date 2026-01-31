@@ -51,9 +51,9 @@ const ArticleFeedByCategoryClient = ({
 					<button
 						className='flex gap-0.25 py-0.75 items-center justify-center hover:text-primary transition break'
 						onClick={() => router.push(`/news/topics/${category.slug}`)}
-						aria-label={`More ${category.name} articles`}
+						aria-label={`View ${category.name} articles`}
 					>
-						<span className='text-xs'>Read</span>
+						<span className='text-xs'>View</span>
 						<ChevronRightIcon size={14} />
 					</button>
 				)}

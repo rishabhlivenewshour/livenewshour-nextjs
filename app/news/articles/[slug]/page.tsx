@@ -3,11 +3,17 @@ import ArticleInfo from '@/components/article/ArticleInfo';
 import ArticleNotFound from '@/components/article/ArticleNotFound';
 import ArticleShare from '@/components/article/ArticleShare';
 import RelatedArticles from '@/components/article/RelatedArticles';
+import JsonLd from '@/components/seo/JsonLd';
+import { readArticleBySlug } from '@/lib/article.read';
+import { generateArticleMetadata } from '@/lib/seo.metadata';
 import {
-	getArticleBySlug,
-	getRelatedArticles,
-} from '@/services/article.service';
+	generateArticleStructuredData,
+	generateBreadcrumbStructuredData,
+} from '@/lib/seo.structured-data';
+import { getRelatedArticles } from '@/services/article.service';
 import { Article } from '@/types/article';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 interface ArticlePageProps {
 	params: {
@@ -15,38 +21,109 @@ interface ArticlePageProps {
 	};
 }
 
+/**
+ * Generate metadata for article pages
+ * This runs at build time for static pages and on-demand for dynamic pages
+ */
+export async function generateMetadata({
+	params,
+}: ArticlePageProps): Promise<Metadata> {
+	const { slug } = await params;
+	const article = await readArticleBySlug(slug);
+
+	// Return 404 metadata if article not found
+	if (!article) {
+		return {
+			title: 'Article Not Found',
+			description: 'The requested article could not be found.',
+			robots: {
+				index: false,
+				follow: false,
+			},
+		};
+	}
+
+	// Generate comprehensive article metadata
+	return generateArticleMetadata({
+		title: article.title,
+		description: article.summary,
+		slug: article.slug,
+		image: article.banner_image,
+		publishedAt: article.published_at,
+		modifiedAt: article.created_at,
+		author: article.author || 'Live News Hour Team',
+		category_name: article.category_name,
+		keywords: article.related_keywords,
+		tags: article.tag ? [article.tag] : undefined,
+	});
+}
+
 const ArticlePage = async ({ params }: ArticlePageProps) => {
 	const { slug } = await params;
-	const article = await getArticleBySlug({ slug });
+	const article = await readArticleBySlug(slug);
+
+	// Handle 404 case
+	if (!article) {
+		notFound();
+	}
+
+	// Fetch related articles
 	let relatedArticles: Article[] = [];
-	if (article) {
+	try {
 		const response = await getRelatedArticles({
 			categoryId: article.category,
 			articleId: article.id,
 		});
 		relatedArticles = response.articles;
+	} catch (error) {
+		console.error('Error fetching related articles:', error);
 	}
 
-	if (!article) {
-		return <ArticleNotFound />;
-	}
+	// Generate structured data for the article
+	const articleStructuredData = generateArticleStructuredData({
+		title: article.title,
+		description: article.summary,
+		slug: article.slug,
+		image: article.banner_image,
+		publishedAt: article.published_at,
+		modifiedAt: article.created_at,
+		author: article.author || 'Live News Hour Team',
+		category_name: article.category_name,
+		keywords: article.related_keywords,
+	});
+
+	// Generate breadcrumb structured data
+	const breadcrumbStructuredData = generateBreadcrumbStructuredData([
+		{ name: 'Home', url: '/' },
+		{
+			name: article.category_name,
+			url: `/news/topics/${article.category_name.toLowerCase()}`,
+		},
+		{ name: article.title },
+	]);
+
 	return (
-		<main className='max-w-7xl mx-auto'>
-			<div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-				<article className='lg:col-span-2'>
-					<ArticleInfo article={article} />
+		<>
+			{/* Structured Data */}
+			<JsonLd data={[articleStructuredData, breadcrumbStructuredData]} />
 
-					<ArticleShare article={article} />
+			<main className='max-w-7xl mx-auto'>
+				<div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
+					<article className='lg:col-span-2'>
+						<ArticleInfo article={article} />
 
-					<ArticleData article={article} />
-				</article>
-				{relatedArticles !== null && (
-					<aside className='space-y-8'>
-						<RelatedArticles articles={relatedArticles} />
-					</aside>
-				)}
-			</div>
-		</main>
+						<ArticleShare article={article} />
+
+						<ArticleData article={article} />
+					</article>
+					{relatedArticles !== null && (
+						<aside className='space-y-8'>
+							<RelatedArticles articles={relatedArticles} />
+						</aside>
+					)}
+				</div>
+			</main>
+		</>
 	);
 };
 
