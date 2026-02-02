@@ -71,6 +71,7 @@ const ArticleFeedByCategoryClient = ({
 					href={`/news/articles/${categoryArticles[0].slug}`}
 					key={categoryArticles[0].id}
 					className='flex flex-col gap-2 rounded transition-all duration-150 ease-in-out group'
+					aria-label={`view ${categoryArticles[0].title} article`}
 				>
 					{categoryArticles[0].banner_image && (
 						<ImageWithSkeleton
@@ -89,6 +90,7 @@ const ArticleFeedByCategoryClient = ({
 						href={`/news/articles/${article.slug}`}
 						key={article.id}
 						className='flex flex-col gap-1 rounded hover:text-primary border-t border-gray-300 transition-all duration-150 ease-in-out'
+						aria-label={`view ${article.title} article`}
 					>
 						<h2 className='text-[13px] font-medium w-full sm:max-w-[300px] mt-2'>
 							{article.title}

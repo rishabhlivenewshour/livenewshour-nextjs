@@ -1,3 +1,4 @@
+import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import { formatDate } from '@/lib/common';
 import { Article } from '@/types/article.types';
 import Image from 'next/image';
@@ -21,15 +22,14 @@ const RelatedArticles = ({ articles }: RelatedArticlesProps) => {
 								key={related.id}
 								href={`/news/articles/${related.slug}`}
 								className='block p-4 hover:bg-gray-50 transition'
+								aria-label={`view ${related.title} article`}
 							>
 								<div className='flex gap-3'>
 									{related.banner_image && (
-										<Image
+										<ImageWithSkeleton
 											src={related.banner_image}
 											alt={related.title}
-											height={96}
-											width={96}
-											className='w-24 h-24 object-cover rounded'
+											parentClassName='w-24 h-24'
 										/>
 									)}
 									<div className='flex-1'>

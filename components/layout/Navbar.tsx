@@ -50,7 +50,7 @@ const Navbar = ({ categories }: NavbarProps) => {
 				</Link>
 			</nav>
 			<div
-				className={`block absolute left-0 z-10 transition duration-300 ${showSidebar ? 'translate-x-0' : 'translate-x-[-50vw]'} `}
+				className={`block absolute left-0 z-10 transition duration-300 ${showSidebar ? 'translate-x-0' : 'translate-x-[-100vw]'} `}
 			>
 				<Sidebar categories={categories} setShowSidebar={setShowSidebar} />
 			</div>
@@ -60,22 +60,23 @@ const Navbar = ({ categories }: NavbarProps) => {
 				{[...categories]
 					.reverse()
 					.slice(0, 6)
-					.map((item, index) => (
+					.map((category, index) => (
 						<Link
 							key={index}
-							href={`/news/topics/${item.slug}`}
+							href={`/news/topics/${category.slug}`}
 							onClick={() => setShowSidebar(false)}
 							className='flex flex-col justify-between items-center hover:text-primary active:text-primary transition-all duration-300 ease-in-out w-fit border-r-2 border-gray-400'
+							aria-label={`view ${category.name} article`}
 						>
-							<p className='px-4'>{item.name}</p>
+							<p className='px-4'>{category.name}</p>
 							{/* <p
 								className={`bg-back w-full h-[2px] ${
-									pathname.includes(item.slug) ? 'block' : 'hidden'
+									pathname.includes(category.slug) ? 'block' : 'hidden'
 								}`}
 							></p> */}
 						</Link>
 					))}
-				<button onClick={() => setShowSidebar(true)}>
+				<button onClick={() => setShowSidebar(true)} aria-label={'More'}>
 					<p className='pl-3 hover:text-primary active:scale-95 transition-all duration-300 ease-in-out w-fit'>
 						MORE
 					</p>

@@ -19,9 +19,7 @@ const ImageWithSkeleton = ({
 	const [loaded, setLoaded] = useState(false);
 
 	return (
-		<div
-			className={`relative w-full max-w-[150px] lg:max-w-[250px] h-[100px] ${parentClassName}`}
-		>
+		<div className={`relative ${parentClassName}`}>
 			{/* Skeleton */}
 			{!loaded && (
 				<div className='absolute inset-0 rounded bg-gray-200 overflow-hidden'>
@@ -31,7 +29,7 @@ const ImageWithSkeleton = ({
 
 			<Image
 				src={src}
-				alt={alt}
+				alt={`${alt} image`}
 				fill
 				className={`object-cover rounded transition-opacity duration-300 ${
 					loaded ? 'opacity-100' : 'opacity-0'

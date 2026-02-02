@@ -79,42 +79,49 @@ const ArticleShare = ({ article }: ArticleShareProps) => {
 			<button
 				onClick={() => shareArticle('facebook')}
 				className='h-[40px] w-[40px] flex items-center justify-center bg-blue-600 text-white rounded-full hover:bg-blue-700 transition text-sm font-semibold'
+				aria-label={'Visit our Facebook Page'}
 			>
 				<FacebookIcon size={22} className='' />
 			</button>
 			<button
 				onClick={() => shareArticle('whatsapp')}
 				className='h-[40px] w-[40px] flex items-center justify-center bg-green-700 text-white rounded-full hover:bg-green-800 transition text-sm font-semibold'
+				aria-label={'Chat with us on whatsapp'}
 			>
 				<WhatsappIcon size={22} className='' />
 			</button>
 			<button
 				onClick={handleInstagramShare}
 				className='h-[40px] w-[40px] flex items-center justify-center bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white rounded-full hover:bg-[#8C3AAA] transition text-sm font-semibold'
+				aria-label={'Visit our Instagram'}
 			>
 				<InstagramIcon size={22} className='' />
 			</button>
 			<button
 				onClick={() => shareArticle('x')}
 				className='h-[40px] w-[40px] flex items-center justify-center bg-gray-800 text-white rounded-full hover:bg-gray-900 transition text-sm font-semibold'
+				aria-label={'Visit our Twitter Handle'}
 			>
 				<XTwitterIcon size={22} className='' />
 			</button>
 			<button
 				onClick={() => shareArticle('linkedin')}
 				className='h-[40px] w-[40px] flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 transition text-sm font-semibold'
+				aria-label={'Visit our LinkedIn Profile'}
 			>
 				<LinkedinIcon size={22} className='' />
 			</button>
 			<button
 				onClick={() => shareArticle('email')}
 				className='h-[40px] w-[40px] flex items-center justify-center bg-red-600 text-white rounded-full hover:bg-red-700 transition text-sm font-semibold'
+				aria-label={'Drop us Mail'}
 			>
 				<MailIcon size={22} className='' />
 			</button>
 			<button
 				onClick={handleCopy}
 				className='h-[40px] w-[40px] flex items-center justify-center bg-gray-600 text-white rounded-full hover:bg-gray-700 transition text-sm font-semibold'
+				aria-label={'Copy'}
 			>
 				{copied ? (
 					<TickIcon size={22} className='' />

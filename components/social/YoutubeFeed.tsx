@@ -5,6 +5,7 @@ import { YoutubeIcon } from '../common/Icons';
 import Link from 'next/link';
 import Image from 'next/image';
 import { YoutubeChannel, YoutubeVideo } from '@/types/social.types';
+import ImageWithSkeleton from '../common/ImageWithSkeleton';
 
 const YoutubeFeed = () => {
 	const [videos, setVideos] = useState<YoutubeVideo[]>([]);
@@ -148,16 +149,13 @@ const YoutubeFeed = () => {
 										<div className='p-3 flex gap-4 items-start group'>
 											{/* Thumbnail */}
 											<div className='relative w-36 h-20 shrink-0 rounded-md overflow-hidden bg-black'>
-												<Image
+												<ImageWithSkeleton
 													src={
 														video.snippet.thumbnails?.medium?.url ||
 														video.snippet.thumbnails?.default?.url
 													}
 													alt={video.snippet.title}
-													width={144}
-													height={80}
-													className='w-full h-full object-cover'
-													loading='lazy'
+													parentClassName='w-[144px] h-[80px]'
 												/>
 
 												<div
@@ -199,6 +197,7 @@ const YoutubeFeed = () => {
 							target='_blank'
 							rel='noopener noreferrer'
 							className='flex items-center justify-center gap-2 w-full py-3 px-4 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors shadow-sm hover:shadow-md'
+							aria-label={`Visit our Yotube Channel`}
 						>
 							<YoutubeIcon size={18} />
 							Visit Our YouTube Channel

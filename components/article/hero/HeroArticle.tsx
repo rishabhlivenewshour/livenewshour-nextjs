@@ -14,12 +14,13 @@ const HeroArticle = ({ article }: HeroArticleProps) => {
 				<Link
 					href={`/news/articles/${article.slug}`}
 					className='flex flex-col tracking-wide'
+					aria-label={`view ${article.title} article`}
 				>
 					{article.banner_image && (
 						<ImageWithSkeleton
 							src={article.banner_image}
 							alt={article.title}
-							parentClassName='w-full max-w-[450px] lg:max-w-[700px] h-[350px]'
+							parentClassName='w-full max-w-[450px] xl:max-w-full h-[350px]'
 						/>
 					)}
 					<div className='mt-2'>

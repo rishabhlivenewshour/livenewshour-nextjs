@@ -18,6 +18,7 @@ const ArticleNotFound = ({ error }: ArticleNotFoundProps) => {
 				<Link
 					href={'/'}
 					className='px-6 py-3 bg-primary text-white rounded-lg hover:bg-secondary transition font-semibold'
+					aria-label={'Go to Homepage'}
 				>
 					Go Back Home
 				</Link>

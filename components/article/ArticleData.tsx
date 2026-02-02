@@ -2,6 +2,7 @@ import { Article } from '@/types/article.types';
 import DOMPurify from 'isomorphic-dompurify';
 import Image from 'next/image';
 import { TagIcon } from '../common/Icons';
+import ImageWithSkeleton from '../common/ImageWithSkeleton';
 
 interface ArticleDataProps {
 	article: Article;
@@ -20,12 +21,10 @@ const ArticleData = ({ article }: ArticleDataProps) => {
 		<>
 			{article.banner_image && (
 				<figure className='mb-8'>
-					<Image
+					<ImageWithSkeleton
 						src={article.banner_image}
 						alt={article.title}
-						height={300}
-						width={500}
-						className='w-full rounded-lg shadow-lg'
+						parentClassName='w-[500px] h-[450px] w-full rounded-lg shadow-lg'
 					/>
 				</figure>
 			)}
@@ -41,12 +40,10 @@ const ArticleData = ({ article }: ArticleDataProps) => {
 
 			{article.secondary_banner_image && (
 				<figure className='mb-8'>
-					<Image
+					<ImageWithSkeleton
 						src={article.secondary_banner_image}
 						alt={article.title}
-						height={350}
-						width={500}
-						className='w-full rounded-lg shadow-lg'
+						parentClassName='w-[500px] h-[350px] w-full rounded-lg shadow-lg'
 					/>
 				</figure>
 			)}

@@ -19,6 +19,7 @@ const ArticleTicker = ({ articles }: ArticleTickerProps) => {
 							key={article.id}
 							href={`/news/articles/${article.slug}`}
 							className='text-sm font-semibold px-4 border-r-2 border-white hover:text-white/95 transition'
+							aria-label={`view ${article.title} article`}
 						>
 							<span className=''>{article.title}</span>
 						</Link>

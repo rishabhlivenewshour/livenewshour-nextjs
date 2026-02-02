@@ -33,6 +33,7 @@ const SearchResults = ({
 							href={`/news/articles/${article.slug}`}
 							key={article.id}
 							className='flex gap-3 w-full hover:bg-gray-100 p-2 rounded transition'
+							aria-label={`view ${article.title} article`}
 						>
 							{article.banner_image && (
 								<ImageWithSkeleton
@@ -109,6 +110,7 @@ const SearchResults = ({
 												href={`/news/articles/${article.slug}`}
 												key={article.id}
 												className='flex gap-3 hover:bg-gray-100 p-2 rounded transition'
+												aria-label={`view ${article.title} article`}
 											>
 												{article.banner_image && (
 													<ImageWithSkeleton

@@ -42,6 +42,7 @@ const Sidebar = ({ categories, setShowSidebar }: SidebarProps) => {
 							href={`/news/topics/${category.slug}`}
 							onClick={() => setShowSidebar(false)}
 							className='w-full flex items-center justify-between gap-2'
+							aria-label={`view ${category.name} article`}
 						>
 							<span
 								className={`py-2 pl-2 ${

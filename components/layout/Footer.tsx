@@ -53,6 +53,7 @@ const Footer = ({ categories }: FooterProps) => {
 								<Link
 									href={`/news/topics/${section.slug}`}
 									className='hover:text-primary transition'
+									aria-label={`view ${section.name} articles`}
 								>
 									{section.name}
 								</Link>
@@ -70,6 +71,7 @@ const Footer = ({ categories }: FooterProps) => {
 								<Link
 									href={item.href}
 									className='hover:text-primary transition'
+									aria-label={`view ${item}`}
 								>
 									{item.label}
 								</Link>
@@ -87,6 +89,7 @@ const Footer = ({ categories }: FooterProps) => {
 								<Link
 									href={item.href}
 									className='hover:text-primary transition'
+									aria-label={`view ${item}`}
 								>
 									{item.label}
 								</Link>

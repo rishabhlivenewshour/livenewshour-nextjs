@@ -33,12 +33,14 @@ export default function Error({ error, reset }: ErrorProps) {
 					<button
 						onClick={reset}
 						className='px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors'
+						aria-label={'Try Again'}
 					>
 						Try Again
 					</button>
 					<Link
 						href='/'
 						className='px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors'
+						aria-label={'Go to Homepage'}
 					>
 						Go Home
 					</Link>

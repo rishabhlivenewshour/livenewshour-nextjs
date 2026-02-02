@@ -18,13 +18,14 @@ const ArticleFeed = ({ heading, articles }: ArticleFeedProps) => {
 						href={`/news/articles/${article.slug}`}
 						key={article.id}
 						className='group flex flex-col gap-2 rounded'
+						aria-label={`view ${article} articles`}
 					>
 						{article.banner_image && (
 							<div className='flex gap-2'>
 								<ImageWithSkeleton
 									src={article.banner_image}
 									alt={article.title}
-									parentClassName='w-full max-w-[250px] lg:max-w-[300px] h-[200px]'
+									parentClassName='w-full max-w-full sm:max-w-[250px] lg:max-w-[300px] h-[200px]'
 								/>
 							</div>
 						)}

@@ -1,3 +1,4 @@
+import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import { Article } from '@/types/article.types';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,22 +15,21 @@ const HeroArticleCard = ({ article }: HeroArticleCardProps) => {
 					href={`/news/articles/${article.slug}`}
 					key={article.id}
 					className='flex gap-3'
+					aria-label={`view ${article.title} article`}
 				>
 					{article.banner_image && (
-						<Image
+						<ImageWithSkeleton
 							src={article.banner_image}
 							alt={article.title}
-							width={100}
-							height={100}
-							className='w-[100px] h-[100px] object-cover rounded'
+							parentClassName='w-[100px] h-[100px]'
 						/>
 					)}
-					<div className=''>
+					<div className='w-[70%]'>
 						<h2 className='font-semibold'>{article.title}</h2>
 						<p className='w-full text-sm text-light h-15 overflow-hidden line-clamp-3'>
 							{article.summary}
 						</p>
-						<p className='font-semibold text-xs text-primary'>
+						<p className='font-semibold text-xs text-primary mt-1'>
 							{article.category_name}
 						</p>
 					</div>
