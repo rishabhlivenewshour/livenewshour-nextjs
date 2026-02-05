@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Article } from '@/types/article.types';
 import {
 	CopyIcon,
 	FacebookIcon,
@@ -11,7 +12,6 @@ import {
 	WhatsappIcon,
 	XTwitterIcon,
 } from '../common/Icons';
-import { Article } from '@/types/article.types';
 
 const getShareUrls = (url: string, text: string) => ({
 	facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(

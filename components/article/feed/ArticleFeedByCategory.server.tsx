@@ -1,5 +1,5 @@
-import { getArticlesByCategory } from '@/services/article.service';
 import { Category } from '@/types/category.types';
+import { getArticlesByCategory } from '@/services/article.service';
 import ArticleFeedByCategoryClient from './ArticleFeedByCategory.client';
 
 interface ArticleFeedByCategoryProps {

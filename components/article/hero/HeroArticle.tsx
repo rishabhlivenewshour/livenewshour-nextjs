@@ -1,10 +1,10 @@
-import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
-import { formatDate } from '@/lib/common';
-import { Article } from '@/types/article.types';
 import Link from 'next/link';
+import { BaseArticle } from '@/types/article.types';
+import { formatDate } from '@/lib/common';
+import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 
 interface HeroArticleProps {
-	article: Article;
+	article: BaseArticle;
 }
 
 const HeroArticle = ({ article }: HeroArticleProps) => {
@@ -21,6 +21,8 @@ const HeroArticle = ({ article }: HeroArticleProps) => {
 							src={article.banner_image}
 							alt={article.title}
 							parentClassName='w-full max-w-[450px] xl:max-w-full h-[350px]'
+							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+							priority={true}
 						/>
 					)}
 					<div className='mt-2'>

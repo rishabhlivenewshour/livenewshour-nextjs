@@ -1,9 +1,9 @@
 'use client';
 
-import { Category } from '@/types/category.types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
+import { Category } from '@/types/category.types';
 
 interface SidebarProps {
 	categories: Category[];

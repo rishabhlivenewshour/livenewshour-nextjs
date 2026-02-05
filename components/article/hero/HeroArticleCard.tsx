@@ -1,10 +1,9 @@
-import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
-import { Article } from '@/types/article.types';
-import Image from 'next/image';
 import Link from 'next/link';
+import { BaseArticle } from '@/types/article.types';
+import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 
 interface HeroArticleCardProps {
-	article: Article;
+	article: BaseArticle;
 }
 
 const HeroArticleCard = ({ article }: HeroArticleCardProps) => {

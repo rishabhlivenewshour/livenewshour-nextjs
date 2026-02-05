@@ -1,6 +1,7 @@
 import {
 	Article,
 	ArticleAPIResponse,
+	BaseArticle,
 	ServiceResult,
 } from '@/types/article.types';
 import {
@@ -10,17 +11,18 @@ import {
 	GetArticlesParams,
 	GetRelatedArticleParams,
 } from '@/types/article.service.types';
+import { CACHE_TAGS, CACHE_TIME } from '@/lib/cache';
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export const getArticlesForTicker = async ({
 	page = 1,
 	pageSize = 10,
-}: GetArticlesParams): Promise<ServiceResult<Article[]>> => {
+}: GetArticlesParams): Promise<ServiceResult<BaseArticle[]>> => {
 	const res = await fetch(
 		`${API_URL}/news/articles/?is_published=true&page=${page}&page_size=${pageSize}`,
-		{ next: { revalidate: 60 * 60 } },
-	); // 1 hour
+		{ next: { revalidate: CACHE_TIME.TICKER, tags: [CACHE_TAGS.TICKER] } },
+	);
 
 	if (!res.ok) {
 		throw new Error('failed to fetch articles for ticker');
@@ -29,7 +31,7 @@ export const getArticlesForTicker = async ({
 	const data: ArticleAPIResponse = await res.json();
 
 	return {
-		articles: data.results || [],
+		articles: mapBaseArticle(data.results) || [],
 		pagination: mapPagination(data, page, pageSize),
 	};
 };
@@ -37,11 +39,11 @@ export const getArticlesForTicker = async ({
 export const getHeroArticles = async ({
 	page = 1,
 	pageSize = 4,
-}: GetArticlesParams): Promise<ServiceResult<Article[]>> => {
+}: GetArticlesParams): Promise<ServiceResult<BaseArticle[]>> => {
 	const res = await fetch(
 		`${API_URL}/news/articles/?is_published=true&page=${page}&page_size=${pageSize}`,
-		{ next: { revalidate: 60 * 60 } },
-	); // 1 hour
+		{ next: { revalidate: CACHE_TIME.HERO, tags: [CACHE_TAGS.HERO] } },
+	);
 
 	if (!res.ok) {
 		throw new Error('failed to fetch hero article');
@@ -50,7 +52,7 @@ export const getHeroArticles = async ({
 	const data: ArticleAPIResponse = await res.json();
 
 	return {
-		articles: data.results || [],
+		articles: mapBaseArticle(data.results) || [],
 		pagination: mapPagination(data, page, pageSize),
 	};
 };
@@ -58,11 +60,11 @@ export const getHeroArticles = async ({
 export const getArticles = async ({
 	page = 1,
 	pageSize = 25,
-}: GetArticlesParams): Promise<ServiceResult<Article[]>> => {
+}: GetArticlesParams): Promise<ServiceResult<BaseArticle[]>> => {
 	const res = await fetch(
 		`${API_URL}/news/articles/?is_published=true&page=${page}&page_size=${pageSize}`,
-		{ next: { revalidate: 60 * 60 } },
-	); // 1 hour
+		{ next: { revalidate: CACHE_TIME.ARTICLES, tags: [CACHE_TAGS.ARTICLES] } },
+	);
 
 	if (!res.ok) {
 		throw new Error('failed to fetch articles');
@@ -71,7 +73,7 @@ export const getArticles = async ({
 	const data: ArticleAPIResponse = await res.json();
 
 	return {
-		articles: data.results || [],
+		articles: mapBaseArticle(data.results) || [],
 		pagination: mapPagination(data, page, pageSize),
 	};
 };
@@ -80,11 +82,16 @@ export const getArticlesByCategory = async ({
 	categoryId,
 	page = 1,
 	pageSize = 4,
-}: GetArticlesByCategoryParams): Promise<ServiceResult<Article[]>> => {
+}: GetArticlesByCategoryParams): Promise<ServiceResult<BaseArticle[]>> => {
 	const res = await fetch(
 		`${API_URL}/news/categories/${categoryId}/articles/?is_published=true&page=${page}&page_size=${pageSize}`,
-		{ next: { revalidate: 60 * 60 } },
-	); // 1 hour
+		{
+			next: {
+				revalidate: CACHE_TIME.ARTICLES,
+				tags: [CACHE_TAGS.ARTICLES_BY_CATEGORY(categoryId)],
+			},
+		},
+	);
 
 	if (!res.ok) {
 		throw new Error('failed to fetch articles by category');
@@ -93,7 +100,7 @@ export const getArticlesByCategory = async ({
 	const data: ArticleAPIResponse = await res.json();
 
 	return {
-		articles: data.results || [],
+		articles: mapBaseArticle(data.results) || [],
 		pagination: mapPagination(data, page, pageSize),
 	};
 };
@@ -102,7 +109,7 @@ export const getArticlesByCategoryClient = async ({
 	categoryId,
 	page = 1,
 	pageSize = 4,
-}: GetArticlesByCategoryParams): Promise<ServiceResult<Article[]>> => {
+}: GetArticlesByCategoryParams): Promise<ServiceResult<BaseArticle[]>> => {
 	const res = await fetch(
 		`${API_URL}/news/categories/${categoryId}/articles/?is_published=true&page=${page}&page_size=${pageSize}`,
 		{ cache: 'no-store' },
@@ -113,9 +120,9 @@ export const getArticlesByCategoryClient = async ({
 			articles: [],
 			pagination: {
 				page,
-				pageSize,
-				totalPages: page - 1,
-				totalItems: 0,
+				page_size: pageSize,
+				total_pages: page - 1,
+				total_items: 0,
 			},
 		};
 	}
@@ -127,7 +134,7 @@ export const getArticlesByCategoryClient = async ({
 	const data: ArticleAPIResponse = await res.json();
 
 	return {
-		articles: data.results || [],
+		articles: mapBaseArticle(data.results) || [],
 		pagination: mapPagination(data, page, pageSize),
 	};
 };
@@ -137,8 +144,13 @@ export const getArticleBySlug = async ({
 }: GetArticleBySlugParams): Promise<Article> => {
 	const res = await fetch(
 		`${API_URL}/news/articles/?is_published=true&slug=${slug}`,
-		{ next: { revalidate: 60 * 60 } },
-	); // 1 hour
+		{
+			next: {
+				revalidate: CACHE_TIME.ARTICLES,
+				tags: [CACHE_TAGS.ARTICLE_BY_SLUG(slug)],
+			},
+		},
+	);
 
 	if (!res.ok) {
 		throw new Error('failed to fetch articles');
@@ -154,11 +166,16 @@ export const getRelatedArticles = async ({
 	articleId,
 	page = 1,
 	pageSize = 4,
-}: GetRelatedArticleParams): Promise<ServiceResult<Article[]>> => {
+}: GetRelatedArticleParams): Promise<ServiceResult<BaseArticle[]>> => {
 	const res = await fetch(
 		`${API_URL}/news/categories/${categoryId}/articles/?is_published=true&page=${page}&page_size=${pageSize}`,
-		{ next: { revalidate: 60 * 60 } },
-	); // 1 hour
+		{
+			next: {
+				revalidate: CACHE_TIME.ARTICLES,
+				tags: [CACHE_TAGS.RELATED(categoryId)],
+			},
+		},
+	);
 
 	if (!res.ok) {
 		throw new Error('failed to fetch hero article');
@@ -167,7 +184,10 @@ export const getRelatedArticles = async ({
 	const data: ArticleAPIResponse = await res.json();
 
 	return {
-		articles: data.results.filter((a) => a.id !== articleId).slice(0, 3) || [],
+		articles:
+			mapBaseArticle(
+				data.results.filter((a) => a.id !== articleId).slice(0, 3),
+			) || [],
 		pagination: mapPagination(data, page, pageSize),
 	};
 };
@@ -176,11 +196,16 @@ export const getArticlesBySearch = async ({
 	searchQuery = '',
 	page = 1,
 	pageSize = 15,
-}: GetArticlesBySearchParams): Promise<ServiceResult<Article[]>> => {
+}: GetArticlesBySearchParams): Promise<ServiceResult<BaseArticle[]>> => {
 	const res = await fetch(
 		`${API_URL}/news/articles/?is_published=true&search=${searchQuery}&page=${page}&page_size=${pageSize}`,
-		{ next: { revalidate: 60 * 60 } },
-	); // 1 hour
+		{
+			next: {
+				revalidate: CACHE_TIME.SEARCH,
+				tags: [CACHE_TAGS.SEARCH(searchQuery)],
+			},
+		},
+	);
 
 	if (!res.ok) {
 		throw new Error('failed to fetch articles by search');
@@ -189,7 +214,7 @@ export const getArticlesBySearch = async ({
 	const data: ArticleAPIResponse = await res.json();
 
 	return {
-		articles: data.results || [],
+		articles: mapBaseArticle(data.results) || [],
 		pagination: mapPagination(data, page, pageSize),
 	};
 };
@@ -198,7 +223,7 @@ export const getArticlesBySearchClient = async ({
 	searchQuery = '',
 	page = 1,
 	pageSize = 15,
-}: GetArticlesBySearchParams): Promise<ServiceResult<Article[]>> => {
+}: GetArticlesBySearchParams): Promise<ServiceResult<BaseArticle[]>> => {
 	const res = await fetch(
 		`${API_URL}/news/articles/?is_published=true&search=${searchQuery}&page=${page}&page_size=${pageSize}`,
 		{ cache: 'no-store' },
@@ -211,7 +236,7 @@ export const getArticlesBySearchClient = async ({
 	const data: ArticleAPIResponse = await res.json();
 
 	return {
-		articles: data.results || [],
+		articles: mapBaseArticle(data.results) || [],
 		pagination: mapPagination(data, page, pageSize),
 	};
 };
@@ -223,8 +248,22 @@ const mapPagination = (
 ) => {
 	return {
 		page: data.page || page,
-		pageSize: data.page_size || pageSize,
-		totalPages: data.total_pages || 1,
-		totalItems: data.total_items || data.results.length,
+		page_size: data.page_size || pageSize,
+		total_pages: data.total_pages || 1,
+		total_items: data.total_items || data.results.length,
 	};
+};
+
+const mapBaseArticle = (data: Article[]): BaseArticle[] => {
+	return data.map((article) => ({
+		id: article.id,
+		title: article.title,
+		slug: article.slug,
+		summary: article.summary,
+		category_name: article.category_name,
+		banner_image: article.banner_image,
+		category: article.category,
+		author: article.author,
+		published_at: article.published_at,
+	}));
 };

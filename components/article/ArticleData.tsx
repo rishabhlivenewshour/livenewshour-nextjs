@@ -1,6 +1,5 @@
-import { Article } from '@/types/article.types';
 import DOMPurify from 'isomorphic-dompurify';
-import Image from 'next/image';
+import { Article } from '@/types/article.types';
 import { TagIcon } from '../common/Icons';
 import ImageWithSkeleton from '../common/ImageWithSkeleton';
 

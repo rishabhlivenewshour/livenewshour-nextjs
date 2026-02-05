@@ -1,17 +1,17 @@
 'use client';
 
-import Input from '../../ui/Input';
-import { SearchIcon } from '../../common/Icons';
-import { Article, ServiceResult } from '@/types/article.types';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
+import { BaseArticle, ServiceResult } from '@/types/article.types';
 import { getArticles, getArticlesBySearchClient } from '@/services/article.service';
-import { useRouter } from 'next/navigation';
+import Input from '../../ui/Input';
+import { SearchIcon } from '../../common/Icons';
 import SearchResults from './SearchResults';
 
 interface SearchClientProps {
 	initialQuery: string;
-	initialData: ServiceResult<Article[]>;
+	initialData: ServiceResult<BaseArticle[]>;
 }
 
 const SearchClient = ({ initialQuery, initialData }: SearchClientProps) => {
@@ -22,10 +22,10 @@ const SearchClient = ({ initialQuery, initialData }: SearchClientProps) => {
 	const loadingRef = useRef(false);
 
 	const [query, setQuery] = useState(initialQuery);
-	const [results, setResults] = useState<Article[]>(initialData.articles);
-	const [hasMore, setHasMore] = useState(initialData.pagination.totalPages > 1);
+	const [results, setResults] = useState<BaseArticle[]>(initialData.articles);
+	const [hasMore, setHasMore] = useState(initialData.pagination.total_pages > 1);
 	
-	const [recentArticles, setRecentArticles] = useState<Article[]>([]);
+	const [recentArticles, setRecentArticles] = useState<BaseArticle[]>([]);
 
 	const debouncedQuery = useDebounce({ value: query, delay: 500 });
 
@@ -33,7 +33,6 @@ const SearchClient = ({ initialQuery, initialData }: SearchClientProps) => {
 		pageRef.current = 1;
 		setResults([]);
 		setHasMore(true);
-		console.log(debouncedQuery);
 		router.replace(
 			debouncedQuery
 				? `/search?q=${encodeURIComponent(debouncedQuery)}`
@@ -80,10 +79,7 @@ const SearchClient = ({ initialQuery, initialData }: SearchClientProps) => {
 				});
 			}
 
-			console.log(data?.pagination);
-			console.log(pageRef.current);
-
-			if (data?.pagination && pageRef.current >= data?.pagination.totalPages) {
+			if (data?.pagination && pageRef.current >= data?.pagination.total_pages) {
 				setHasMore(false);
 			}
 

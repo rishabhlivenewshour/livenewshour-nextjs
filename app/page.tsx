@@ -1,25 +1,28 @@
-import Heading from '@/components/ui/Heading';
+import { Metadata } from 'next';
+import dynamic from 'next/dynamic';
+import { generateHomeMetadata } from '@/lib/seo.metadata';
+import { Category } from '@/types/category.types';
+import {  BaseArticle } from '@/types/article.types';
 import { getArticles, getHeroArticles } from '@/services/article.service';
-import FacebookFeed from '@/components/social/FacebookFeed';
-import InstagramFeed from '@/components/social/InstagramFeed';
-import YoutubeFeed from '@/components/social/YoutubeFeed';
 import { getCategories } from '@/services/category.service';
 import ArticleSkeleton from '@/components/article/ui/ArticleSkeleton';
-import { generateHomeMetadata } from '@/lib/seo.metadata';
-import { Metadata } from 'next';
-import { Category } from '@/types/category.types';
-import { Article } from '@/types/article.types';
+import Heading from '@/components/ui/Heading';
 import HeroSection from '@/components/article/hero/HeroSection';
 import ArticleFeed from '@/components/article/feed/ArticleFeed';
 import ArticleFeedByCategory from '@/components/article/feed/ArticleFeedByCategory.server';
+const FacebookFeed = dynamic(() => import('../components/social/FacebookFeed'));
+const InstagramFeed = dynamic(
+	() => import('../components/social/InstagramFeed'),
+);
+const YoutubeFeed = dynamic(() => import('../components/social/YoutubeFeed'));
 
 // Home page metadata
 // Uses the default SEO configuration
 export const metadata: Metadata = generateHomeMetadata();
 
 const Home = async () => {
-	let heroArticles: Article[] = [];
-	let articles: Article[] = [];
+	let heroArticles: BaseArticle[] = [];
+	let articles: BaseArticle[] = [];
 	let categories: Category[] = [];
 
 	try {

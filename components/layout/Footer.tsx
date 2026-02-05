@@ -1,9 +1,9 @@
-import Logo from '../common/Logo';
-import { FacebookIcon, InstagramIcon, XTwitterIcon } from '../common/Icons';
 import Link from 'next/link';
-import { Category } from '@/types/category.types';
 import { useMemo } from 'react';
+import { Category } from '@/types/category.types';
+import Logo from '../common/Logo';
 import SocialLink from '../common/SocialLink';
+import { FacebookIcon, InstagramIcon, XTwitterIcon } from '../common/Icons';
 
 interface FooterProps {
 	categories: Category[];

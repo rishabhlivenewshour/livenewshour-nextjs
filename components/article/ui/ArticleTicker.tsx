@@ -1,5 +1,5 @@
-import { Article } from '@/types/article.types';
 import Link from 'next/link';
+import { Article } from '@/types/article.types';
 import Marquee from 'react-fast-marquee';
 
 interface ArticleTickerProps {

@@ -1,18 +1,18 @@
-import ArticleData from '@/components/article/ArticleData';
-import ArticleInfo from '@/components/article/ArticleInfo';
-import ArticleShare from '@/components/article/ArticleShare';
-import RelatedArticles from '@/components/article/feed/RelatedArticles';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import JsonLd from '@/components/seo/JsonLd';
-import { readArticleBySlug } from '@/lib/article.read';
 import { generateArticleMetadata } from '@/lib/seo.metadata';
 import {
 	generateArticleStructuredData,
 	generateBreadcrumbStructuredData,
 } from '@/lib/seo.structured-data';
+import { BaseArticle } from '@/types/article.types';
+import { readArticleBySlug } from '@/lib/article.read';
 import { getRelatedArticles } from '@/services/article.service';
-import { Article } from '@/types/article.types';
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import ArticleData from '@/components/article/ArticleData';
+import ArticleInfo from '@/components/article/ArticleInfo';
+import ArticleShare from '@/components/article/ArticleShare';
+import RelatedArticles from '@/components/article/feed/RelatedArticles';
 
 interface ArticlePageProps {
 	params: {
@@ -65,7 +65,7 @@ const ArticlePage = async ({ params }: ArticlePageProps) => {
 	}
 
 	// Fetch related articles
-	let relatedArticles: Article[] = [];
+	let relatedArticles: BaseArticle[] = [];
 	try {
 		const response = await getRelatedArticles({
 			categoryId: article.category,

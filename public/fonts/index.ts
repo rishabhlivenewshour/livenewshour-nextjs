@@ -9,4 +9,7 @@ export const Poppins = localFont({
 	],
 	variable: '--font-poppins-local',
 	display: 'swap',
+	preload: true,
+	fallback: ['system-ui', 'arial'],
+	adjustFontFallback: 'Arial',
 });

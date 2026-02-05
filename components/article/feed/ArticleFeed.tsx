@@ -1,11 +1,11 @@
-import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
-import Heading from '@/components/ui/Heading';
-import { Article } from '@/types/article.types';
 import Link from 'next/link';
+import { BaseArticle } from '@/types/article.types';
+import Heading from '@/components/ui/Heading';
+import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 
 interface ArticleFeedProps {
 	heading: string;
-	articles: Article[];
+	articles: BaseArticle[];
 }
 
 const ArticleFeed = ({ heading, articles }: ArticleFeedProps) => {

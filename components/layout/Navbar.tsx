@@ -1,11 +1,12 @@
 'use client';
-import { Category } from '@/types/category.types';
+
 import Link from 'next/link';
-import { useState } from 'react';
-import Logo from '../common/Logo';
-import Sidebar from './Sidebar';
-import { MenuIcon, CloseIcon, SearchIcon } from '../common/Icons';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import { Category } from '@/types/category.types';
+import Sidebar from './Sidebar';
+import Logo from '../common/Logo';
+import { MenuIcon, CloseIcon, SearchIcon } from '../common/Icons';
 
 interface NavbarProps {
 	categories: Category[];
@@ -69,11 +70,6 @@ const Navbar = ({ categories }: NavbarProps) => {
 							aria-label={`view ${category.name} article`}
 						>
 							<p className='px-4'>{category.name}</p>
-							{/* <p
-								className={`bg-back w-full h-[2px] ${
-									pathname.includes(category.slug) ? 'block' : 'hidden'
-								}`}
-							></p> */}
 						</Link>
 					))}
 				<button onClick={() => setShowSidebar(true)} aria-label={'More'}>

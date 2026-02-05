@@ -1,10 +1,10 @@
-import { structuredDataToJsonLd } from '@/lib/seo.structured-data';
 import {
 	ArticleStructuredData,
 	WebSiteStructuredData,
 	OrganizationStructuredData,
 	BreadcrumbStructuredData,
 } from '@/types/seo.types';
+import { structuredDataToJsonLd } from '@/lib/seo.structured-data';
 
 interface JsonLdProps {
 	data:

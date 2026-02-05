@@ -1,11 +1,11 @@
-import { Article } from '@/types/article.types';
+import { BaseArticle } from '@/types/article.types';
 import HeroArticle from './HeroArticle';
 import HeroArticleCard from './HeroArticleCard';
 import ArticleSkeleton from '../ui/ArticleSkeleton';
 
 interface HeroSectionProps {
-	heroArticle: Article;
-	articles: Article[];
+	heroArticle: BaseArticle;
+	articles: BaseArticle[];
 }
 
 const HeroSection = ({ heroArticle, articles }: HeroSectionProps) => {

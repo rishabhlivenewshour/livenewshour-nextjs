@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { YoutubeIcon } from '../common/Icons';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import { YoutubeChannel, YoutubeVideo } from '@/types/social.types';
+import { YoutubeIcon } from '../common/Icons';
 import ImageWithSkeleton from '../common/ImageWithSkeleton';
 
 const YoutubeFeed = () => {
@@ -31,7 +31,6 @@ const YoutubeFeed = () => {
 	const fetchAll = async () => {
 		try {
 			await Promise.all([fetchChannelInfo(), fetchVideos()]);
-			console.log(channelInfo);
 		} catch (err) {
 			console.error(err);
 		} finally {

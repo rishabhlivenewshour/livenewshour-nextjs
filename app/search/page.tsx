@@ -1,10 +1,10 @@
-import ArticleFeedByCategory from '@/components/article/feed/ArticleFeedByCategory.server';
-import SearchClient from '@/components/article/search/SearchClient';
-import { readCategories } from '@/lib/category.read';
-import { generateSearchMetadata } from '@/lib/seo.metadata';
-import { getArticlesBySearch } from '@/services/article.service';
-import { Article, ServiceResult } from '@/types/article.types';
 import { Metadata } from 'next';
+import { generateSearchMetadata } from '@/lib/seo.metadata';
+import { BaseArticle, ServiceResult } from '@/types/article.types';
+import { readCategories } from '@/lib/category.read';
+import { getArticlesBySearch } from '@/services/article.service';
+import SearchClient from '@/components/article/search/SearchClient';
+import ArticleFeedByCategory from '@/components/article/feed/ArticleFeedByCategory.server';
 
 interface SearchPageProps {
 	searchParams: {
@@ -27,13 +27,13 @@ export async function generateMetadata({
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
 	const { q } = await searchParams;
 
-	let initialData: ServiceResult<Article[]> = {
+	let initialData: ServiceResult<BaseArticle[]> = {
 		articles: [],
 		pagination: {
 			page: 1,
-			pageSize: 15,
-			totalPages: 0,
-			totalItems: 0,
+			page_size: 15,
+			total_pages: 0,
+			total_items: 0,
 		},
 	};
 

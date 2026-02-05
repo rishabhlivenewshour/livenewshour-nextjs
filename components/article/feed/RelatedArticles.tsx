@@ -1,11 +1,10 @@
-import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
-import { formatDate } from '@/lib/common';
-import { Article } from '@/types/article.types';
-import Image from 'next/image';
 import Link from 'next/link';
+import { BaseArticle } from '@/types/article.types';
+import { formatDate } from '@/lib/common';
+import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 
 interface RelatedArticlesProps {
-	articles: Article[];
+	articles: BaseArticle[];
 }
 
 const RelatedArticles = ({ articles }: RelatedArticlesProps) => {
@@ -37,9 +36,7 @@ const RelatedArticles = ({ articles }: RelatedArticlesProps) => {
 											{related.title}
 										</h4>
 										<p className='text-xs text-gray-500'>
-											{formatDate(
-												related.published_at || related.created_at || '',
-											)}
+											{formatDate(related.published_at || '')}
 										</p>
 									</div>
 								</div>

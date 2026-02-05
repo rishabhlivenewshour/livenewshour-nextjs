@@ -6,6 +6,8 @@ import { useState } from 'react';
 interface ArticleImageProps {
 	src: string;
 	alt: string;
+	priority?: boolean;
+	sizes?: string;
 	parentClassName?: string;
 	imageClassName?: string;
 }
@@ -13,6 +15,8 @@ interface ArticleImageProps {
 const ImageWithSkeleton = ({
 	src,
 	alt,
+	priority,
+	sizes,
 	parentClassName,
 	imageClassName,
 }: ArticleImageProps) => {
@@ -31,6 +35,8 @@ const ImageWithSkeleton = ({
 				src={src}
 				alt={`${alt} image`}
 				fill
+				priority={priority}
+				sizes={sizes}
 				className={`object-cover rounded transition-opacity duration-300 ${
 					loaded ? 'opacity-100' : 'opacity-0'
 				} ${imageClassName}`}

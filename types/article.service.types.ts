@@ -14,7 +14,7 @@ export interface GetArticleBySlugParams {
 }
 
 export interface GetRelatedArticleParams {
-	categoryId: number;
+	categoryId: string;
 	articleId: number;
 	page?: number;
 	pageSize?: number;

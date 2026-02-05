@@ -1,18 +1,18 @@
-import { Article } from '@/types/article.types';
 import Link from 'next/link';
+import { BaseArticle } from '@/types/article.types';
+import Heading from '../../ui/Heading';
 import ArticleSkeleton from '../ui/ArticleSkeleton';
 import { LoaderIcon } from '../../common/Icons';
 import ImageWithSkeleton from '../../common/ImageWithSkeleton';
-import Heading from '../../ui/Heading';
 
 interface SearchResultsProps {
 	debouncedQuery: string;
-	results: Article[];
+	results: BaseArticle[];
 	hasMore: boolean;
 	observerRef: (node: HTMLDivElement | null) => void;
 	loading: boolean;
 	currentPage: number;
-	recentArticles: Article[];
+	recentArticles: BaseArticle[];
 }
 
 const SearchResults = ({

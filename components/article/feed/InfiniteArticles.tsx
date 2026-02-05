@@ -1,10 +1,10 @@
 'use client';
 
-import { Article } from '@/types/article.types';
-import { useEffect, useRef, useState } from 'react';
-import ArticleFeed from './ArticleFeed';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { BaseArticle } from '@/types/article.types';
 import { getArticlesByCategoryClient } from '@/services/article.service';
 import ArticleSkeleton from '../ui/ArticleSkeleton';
+import ArticleFeed from './ArticleFeed';
 
 interface InfiniteArticlesProps {
 	categoryId: string;
@@ -12,11 +12,11 @@ interface InfiniteArticlesProps {
 	totalPages: number;
 }
 
-const InfiniteArticles = ({
+const InfiniteArticles = memo(function InfiniteArticles({
 	categoryId,
 	initialPage,
 	totalPages,
-}: InfiniteArticlesProps) => {
+}: InfiniteArticlesProps) {
 	const elementRef = useRef<HTMLDivElement | null>(null);
 	const pageRef = useRef(initialPage);
 	const loadingRef = useRef(false);
@@ -24,9 +24,9 @@ const InfiniteArticles = ({
 	const hasMoreRef = useRef(initialPage < totalPages);
 	const [hasMore, setHasMore] = useState(hasMoreRef.current);
 
-	const [articles, setArticles] = useState<Article[]>([]);
+	const [articles, setArticles] = useState<BaseArticle[]>([]);
 
-	const loadNextPage = async () => {
+	const loadNextPage = useCallback(async () => {
 		if (!hasMoreRef.current || loadingRef.current) return;
 
 		loadingRef.current = true;
@@ -52,7 +52,10 @@ const InfiniteArticles = ({
 				return [...prev, ...uniqueNew];
 			});
 
-			if (data?.pagination && pageRef.current >= data?.pagination?.totalPages) {
+			if (
+				data?.pagination &&
+				pageRef.current >= data?.pagination?.total_pages
+			) {
 				hasMoreRef.current = false;
 				setHasMore(false);
 			}
@@ -65,7 +68,7 @@ const InfiniteArticles = ({
 		} finally {
 			loadingRef.current = false;
 		}
-	};
+	}, [categoryId]);
 
 	useEffect(() => {
 		const observer = new IntersectionObserver(
@@ -107,6 +110,6 @@ const InfiniteArticles = ({
 			</div>
 		</>
 	);
-};
+});
 
 export default InfiniteArticles;

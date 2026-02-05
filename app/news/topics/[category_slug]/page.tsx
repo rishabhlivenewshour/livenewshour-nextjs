@@ -1,16 +1,15 @@
-import ArticleFeed from '@/components/article/feed/ArticleFeed';
-import InfiniteArticles from '@/components/article/feed/InfiniteArticles';
-import HeroArticle from '@/components/article/hero/HeroArticle';
-import JsonLd from '@/components/seo/JsonLd';
-import Heading from '@/components/ui/Heading';
-import { readCategories } from '@/lib/category.read';
-import { generateCategoryMetadata } from '@/lib/seo.metadata';
-import { generateBreadcrumbStructuredData } from '@/lib/seo.structured-data';
-import { getArticlesByCategory } from '@/services/article.service';
-import { getCategories } from '@/services/category.service';
-import { Article } from '@/types/article.types';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import JsonLd from '@/components/seo/JsonLd';
+import { generateCategoryMetadata } from '@/lib/seo.metadata';
+import { generateBreadcrumbStructuredData } from '@/lib/seo.structured-data';
+import { BaseArticle } from '@/types/article.types';
+import { readCategories } from '@/lib/category.read';
+import { getArticlesByCategory } from '@/services/article.service';
+import Heading from '@/components/ui/Heading';
+import HeroArticle from '@/components/article/hero/HeroArticle';
+import ArticleFeed from '@/components/article/feed/ArticleFeed';
+import InfiniteArticles from '@/components/article/feed/InfiniteArticles';
 
 interface CategoryArticlesProps {
 	params: {
@@ -50,7 +49,7 @@ const CategoryArticlesPage = async ({ params }: CategoryArticlesProps) => {
 
 	const category = categories.find((cat) => cat.slug === category_slug);
 
-	let articles: Article[] = [];
+	let articles: BaseArticle[] = [];
 	let total_pages = 1;
 
 	if (category) {
@@ -61,7 +60,7 @@ const CategoryArticlesPage = async ({ params }: CategoryArticlesProps) => {
 		});
 
 		articles = data.articles;
-		total_pages = data?.pagination?.totalPages || 1;
+		total_pages = data?.pagination?.total_pages || 1;
 	}
 
 	// Handle 404 case

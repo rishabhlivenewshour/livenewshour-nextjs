@@ -13,7 +13,7 @@ import {
 	generateOrganizationStructuredData,
 	generateWebSiteStructuredData,
 } from '@/lib/seo.structured-data';
-import { readCategories } from '@/lib/category.read';
+import { readCategories, readTickerArticles } from '@/lib/category.read';
 
 // Root metadata - applies to all pages unless overridden
 // Uses template pattern for dynamic title generation
@@ -72,8 +72,7 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	const categories = await readCategories();
-	const tickerArticles = (await getArticlesForTicker({ page: 1, pageSize: 10 }))
-		.articles;
+	const tickerArticles = await readTickerArticles();
 
 	return (
 		<html lang='en'>
