@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { Article } from '@/types/article.types';
+import { BaseArticle } from '@/types/article.types';
 import Marquee from 'react-fast-marquee';
 
 interface ArticleTickerProps {
-	articles: Article[];
+	articles: BaseArticle[];
 }
 
 const ArticleTicker = ({ articles }: ArticleTickerProps) => {
