@@ -1,4 +1,4 @@
-const { spawn } = require("child_process");
+const { spawn, spawnSync } = require("child_process");
 const path = require("path");
 
 const hostname = process.env.HOST || process.env.HOSTNAME || "0.0.0.0";
@@ -13,17 +13,30 @@ const nextBin = path.join(
   "next",
 );
 
+const env = {
+  ...process.env,
+  HOST: hostname,
+  PORT: String(port),
+  NODE_ENV: nodeEnv,
+};
+
+const buildResult = spawnSync(process.execPath, [nextBin, "build"], {
+  cwd: __dirname,
+  stdio: "inherit",
+  env,
+});
+
+if (buildResult.status !== 0) {
+  process.exit(buildResult.status || 1);
+}
+
 const child = spawn(
   process.execPath,
   [nextBin, "start", "-H", hostname, "-p", String(port)],
   {
+    cwd: __dirname,
     stdio: "inherit",
-    env: {
-      ...process.env,
-      HOST: hostname,
-      PORT: String(port),
-      NODE_ENV: nodeEnv,
-    },
+    env,
   },
 );
 
