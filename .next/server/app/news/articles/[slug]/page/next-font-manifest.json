@@ -1,0 +1,13 @@
+{
+  "pages": {},
+  "app": {
+    "[project]/app/news/articles/[slug]/page": [
+      "static/media/poppins_regular-s.p.6244d5be.woff2",
+      "static/media/poppins_500-s.p.8c436254.woff2",
+      "static/media/poppins_600-s.p.09f5eb10.woff2",
+      "static/media/poppins_700-s.p.5a04bf79.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pagesUsingSizeAdjust": false
+}

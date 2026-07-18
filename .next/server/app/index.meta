@@ -1,0 +1,14 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/page,_N_T_/,_N_T_/index,categories,hero-articles,articles,ticker-articles,articles-21,articles-20,articles-19,articles-18,articles-17,articles-16,articles-15,articles-14,articles-13,articles-12,articles-11,articles-2,articles-9,articles-1,articles-4,articles-8,articles-7,articles-6"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/__PAGE__",
+    "/_index",
+    "/_head"
+  ]
+}
